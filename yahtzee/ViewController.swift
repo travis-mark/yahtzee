@@ -22,13 +22,13 @@ class ViewController: UIViewController {
     @IBOutlet weak var rollCountLabel: UILabel!
     
     let dice = [
-        UIImage(systemName: "rectangle"),
-        UIImage(systemName: "die.face.1.fill"),
-        UIImage(systemName: "die.face.2.fill"),
-        UIImage(systemName: "die.face.3.fill"),
-        UIImage(systemName: "die.face.4.fill"),
-        UIImage(systemName: "die.face.5.fill"),
-        UIImage(systemName: "die.face.6.fill")
+        UIImage(systemName: "rectangle")!,
+        UIImage(systemName: "die.face.1.fill")!,
+        UIImage(systemName: "die.face.2.fill")!,
+        UIImage(systemName: "die.face.3.fill")!,
+        UIImage(systemName: "die.face.4.fill")!,
+        UIImage(systemName: "die.face.5.fill")!,
+        UIImage(systemName: "die.face.6.fill")!
     ]
     
     override func viewDidLoad() {
@@ -44,25 +44,29 @@ class ViewController: UIViewController {
     @IBAction func rollDiceDidPress(_ sender: UIButton) {
         if (die1HoldButton.tag == 0) {
             die1ImageView.tag = Int.random(in: 1...6)
-            die1ImageView.image = dice[die1ImageView.tag]
+            die1ImageView.image = dice[0] // Clear image, force transition
+            die1ImageView.setSymbolImage(dice[die1ImageView.tag], contentTransition: .replace.offUp)
         }
         if (die2HoldButton.tag == 0) {
             die2ImageView.tag = Int.random(in: 1...6)
-            die2ImageView.image = dice[die2ImageView.tag]
+            die2ImageView.image = dice[0] // Clear image, force transition
+            die2ImageView.setSymbolImage(dice[die2ImageView.tag], contentTransition: .replace.offUp)
         }
         if (die3HoldButton.tag == 0) {
             die3ImageView.tag = Int.random(in: 1...6)
-            die3ImageView.image = dice[die3ImageView.tag]
+            die3ImageView.image = dice[0] // Clear image, force transition
+            die3ImageView.setSymbolImage(dice[die3ImageView.tag], contentTransition: .replace.offUp)
         }
         if (die4HoldButton.tag == 0) {
             die4ImageView.tag = Int.random(in: 1...6)
-            die4ImageView.image = dice[die4ImageView.tag]
+            die4ImageView.image = dice[0] // Clear image, force transition
+            die4ImageView.setSymbolImage(dice[die4ImageView.tag], contentTransition: .replace.offUp)
         }
         if (die5HoldButton.tag == 0) {
             die5ImageView.tag = Int.random(in: 1...6)
-            die5ImageView.image = dice[die5ImageView.tag]
+            die5ImageView.image = dice[0] // Clear image, force transition
+            die5ImageView.setSymbolImage(dice[die5ImageView.tag], contentTransition: .replace.offUp)
         }
     }
-    
 }
 

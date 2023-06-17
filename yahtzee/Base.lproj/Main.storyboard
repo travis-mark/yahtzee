@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22113.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22089"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -13,103 +13,104 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="yahtzee" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yahtzee" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MWI-BE-hwu">
-                                <rect key="frame" x="138.66666666666666" y="59" width="116" height="40.666666666666657"/>
+                                <rect key="frame" x="102" y="20" width="116" height="41"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mmR-Pk-MBs">
-                                <rect key="frame" x="136.66666666666666" y="770" width="119.66666666666666" height="48"/>
+                                <rect key="frame" x="112.5" y="507.5" width="95" height="40.5"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" image="dice.fill" catalog="system" title="Roll">
-                                    <fontDescription key="titleFontDescription" style="UICTFontTextStyleTitle1"/>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage"/>
+                                    <fontDescription key="titleFontDescription" style="UICTFontTextStyleTitle2"/>
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="rollDiceDidPress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="FoW-xW-XaG"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(1 of 3)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4P1-W9-d3I">
-                                <rect key="frame" x="264.33333333333331" y="783.66666666666663" width="119.66666666666669" height="21"/>
+                                <rect key="frame" x="215.5" y="517.5" width="95.5" height="21"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GJx-gY-vfe">
-                                <rect key="frame" x="164.33333333333334" y="645.66666666666663" width="64.333333333333343" height="64.333333333333371"/>
+                                <rect key="frame" x="135" y="398" width="50" height="49.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="GJx-gY-vfe" secondAttribute="height" multiplier="1:1" id="Oh1-uW-oXl"/>
                                 </constraints>
                                 <color key="tintColor" systemColor="systemGrayColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="HOLD">
-                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="12"/>
+                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="8"/>
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="dieHoldDidPress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Unr-p6-uhg"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PaO-X8-TFp">
-                                <rect key="frame" x="236.66666666666663" y="645.66666666666663" width="64" height="64.333333333333371"/>
+                                <rect key="frame" x="193" y="398" width="49.5" height="49.5"/>
                                 <color key="tintColor" systemColor="systemGrayColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="HOLD">
-                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="12"/>
+                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="8"/>
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="dieHoldDidPress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="b84-WA-MDb"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XLj-af-xss">
-                                <rect key="frame" x="308.66666666666669" y="645.66666666666663" width="64.333333333333314" height="64.333333333333371"/>
+                                <rect key="frame" x="250.5" y="398" width="49.5" height="49.5"/>
                                 <color key="tintColor" systemColor="systemGrayColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="HOLD">
-                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="12"/>
+                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="8"/>
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="dieHoldDidPress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ONP-9Q-hlf"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6f3-te-iWn">
-                                <rect key="frame" x="92.333333333333329" y="645.66666666666663" width="63.999999999999986" height="64.333333333333371"/>
+                                <rect key="frame" x="77.5" y="398" width="49.5" height="49.5"/>
                                 <color key="tintColor" systemColor="systemGrayColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="HOLD">
-                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="12"/>
+                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="8"/>
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="dieHoldDidPress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VOo-W8-uEg"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aD5-UI-f5M">
-                                <rect key="frame" x="20" y="645.66666666666663" width="64.333333333333329" height="64.333333333333371"/>
+                                <rect key="frame" x="20" y="398" width="49.5" height="49.5"/>
                                 <color key="tintColor" systemColor="systemGrayColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="HOLD">
-                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="12"/>
+                                    <fontDescription key="titleFontDescription" type="boldSystem" pointSize="8"/>
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="dieHoldDidPress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tne-5A-7dY"/>
                                 </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="die.face.3.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="v8S-1p-PZf">
-                                <rect key="frame" x="164.33333333333334" y="575.33333333333326" width="64.333333333333343" height="61"/>
+                                <rect key="frame" x="135" y="341.5" width="50" height="47"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="die.face.4.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="1Ol-6z-NuU">
-                                <rect key="frame" x="236.33333333333334" y="575.33333333333326" width="64.666666666666657" height="61"/>
+                                <rect key="frame" x="192.5" y="341.5" width="50" height="47"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="die.face.2.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="RFL-op-R2K">
-                                <rect key="frame" x="92.333333333333329" y="575.33333333333326" width="63.999999999999986" height="61"/>
+                                <rect key="frame" x="77.5" y="341.5" width="49.5" height="47"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="die.face.1.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Kp3-8B-zQA">
-                                <rect key="frame" x="20" y="575.33333333333326" width="64.333333333333329" height="61"/>
+                                <rect key="frame" x="20" y="341.5" width="49.5" height="47"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="die.face.5.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Nsh-PE-QXD">
-                                <rect key="frame" x="308.66666666666669" y="575.33333333333326" width="64.666666666666686" height="61"/>
+                                <rect key="frame" x="250.5" y="341.5" width="49.5" height="47"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -117,6 +118,7 @@
                         <constraints>
                             <constraint firstItem="GJx-gY-vfe" firstAttribute="width" secondItem="6f3-te-iWn" secondAttribute="width" id="2gs-Rk-IVB"/>
                             <constraint firstItem="6f3-te-iWn" firstAttribute="bottom" secondItem="aD5-UI-f5M" secondAttribute="bottom" id="3pz-9e-O3x"/>
+                            <constraint firstAttribute="bottom" secondItem="mmR-Pk-MBs" secondAttribute="bottom" constant="20" symbolic="YES" id="5pa-gI-zX1"/>
                             <constraint firstItem="GJx-gY-vfe" firstAttribute="width" secondItem="PaO-X8-TFp" secondAttribute="width" id="7Kq-Wk-XZt"/>
                             <constraint firstItem="Nsh-PE-QXD" firstAttribute="height" secondItem="XLj-af-xss" secondAttribute="height" multiplier="0.994819" id="9fL-h7-HpI"/>
                             <constraint firstItem="RFL-op-R2K" firstAttribute="width" secondItem="v8S-1p-PZf" secondAttribute="width" id="9rh-Ha-M3H"/>
@@ -161,7 +163,6 @@
                             <constraint firstItem="1Ol-6z-NuU" firstAttribute="centerX" secondItem="PaO-X8-TFp" secondAttribute="centerX" id="lVZ-x4-Ed5"/>
                             <constraint firstItem="GJx-gY-vfe" firstAttribute="bottom" secondItem="6f3-te-iWn" secondAttribute="bottom" id="lXi-ei-vfw"/>
                             <constraint firstItem="Kp3-8B-zQA" firstAttribute="centerY" secondItem="RFL-op-R2K" secondAttribute="centerY" id="n8W-G4-2No"/>
-                            <constraint firstItem="mmR-Pk-MBs" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="no1-vu-FeJ"/>
                             <constraint firstItem="PaO-X8-TFp" firstAttribute="width" secondItem="XLj-af-xss" secondAttribute="width" id="o0n-Pv-lyq"/>
                             <constraint firstItem="mmR-Pk-MBs" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="pu2-zI-0sy"/>
                             <constraint firstItem="6f3-te-iWn" firstAttribute="top" secondItem="aD5-UI-f5M" secondAttribute="top" id="pv8-Bb-mbg"/>
