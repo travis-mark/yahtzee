@@ -27,6 +27,7 @@
 		1F7DAA522A3D491D005051CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1F7DAA542A3D491D005051CB /* yahtzee.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = yahtzee.entitlements; sourceTree = "<group>"; };
 		1F7DAA552A3D491D005051CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1F7DAA5B2A3FF018005051CB /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +44,7 @@
 		1F7DAA372A3D491C005051CB = {
 			isa = PBXGroup;
 			children = (
+				1F7DAA5B2A3FF018005051CB /* README.md */,
 				1F7DAA422A3D491C005051CB /* yahtzee */,
 				1F7DAA412A3D491C005051CB /* Products */,
 			);
