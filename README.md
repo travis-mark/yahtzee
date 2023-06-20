@@ -8,6 +8,7 @@ Current areas of interest:
 - TODO: OSLog usage
 - TODO: Swift Data game state
 - Xcode builtin git handling
+- TODO: Add tests
 
 
 

@@ -7,7 +7,6 @@
 
 import UIKit
 
-// TODO: Add scoring for full house, small straight, large straight, chance, yahtzee
 // TODO: Game complete / reset
 // TODO: Add title screen (New Game, Continue) -> (Roll, Quit)
 
@@ -29,6 +28,14 @@ enum ScoreBoxes: Int {
     case total = 15
 }
 
+func count(dice: [Int]) -> [Int] {
+    var counts = [0, 0, 0, 0, 0, 0, 0]
+    for i in 0 ..< dice.count {
+        counts[dice[i]] += 1
+    }
+    return counts
+}
+
 func score(dice: [Int], for box: ScoreBoxes) -> Int {
     switch box {
     case .ones:
@@ -44,17 +51,26 @@ func score(dice: [Int], for box: ScoreBoxes) -> Int {
     case .sixes:
         return dice.reduce(0, { $0 + ($1 == 6 ? $1 : 0) })
     case .threeOfAKind:
-        var counts = [0, 0, 0, 0, 0, 0, 0]
-        for i in 0 ..< dice.count {
-            counts[dice[i]] += 1
-        }
-        return counts.max()! >= 3 ? dice.reduce(0, { $0 + $1 }) : 0
+        let counts = count(dice: dice)
+        return counts.max()! >= 3 ? dice.reduce(0, +) : 0
     case .fourOfAKind:
-        var counts = [0, 0, 0, 0, 0, 0, 0]
-        for i in 0 ..< dice.count {
-            counts[dice[i]] += 1
-        }
-        return counts.max()! >= 4 ? dice.reduce(0, { $0 + $1 }) : 0
+        let counts = count(dice: dice)
+        return counts.max()! >= 4 ? dice.reduce(0, +) : 0
+    case .smallStraight:
+        let mask = dice.reduce(0, { $0 | 1 << $1 })
+        return mask & 30 == 30 || mask & 60 == 60 || mask & 120 == 120 ? 30 : 0
+    case .largeStraight:
+        let mask = dice.reduce(0, { $0 | 1 << $1 })
+        return mask & 62 == 62 || mask & 124 == 124 ? 40 : 0
+    case .fullHouse:
+        let counts = count(dice: dice)
+        return counts.contains(3) && counts.contains(2) ? 25 : 0
+    case .chance:
+        return dice.reduce(0, +)
+    case .yahtzee:
+        // TODO: Yahtzee bonus 100
+        let counts = count(dice: dice)
+        return counts.contains(5) ? 50 : 0
     default:
         return 0
     }
