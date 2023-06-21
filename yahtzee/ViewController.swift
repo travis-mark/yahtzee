@@ -28,55 +28,66 @@ enum ScoreBoxes: Int {
     case total = 15
 }
 
-func count(dice: [Int]) -> [Int] {
-    var counts = [0, 0, 0, 0, 0, 0, 0]
-    for i in 0 ..< dice.count {
-        counts[dice[i]] += 1
+class ScoreSheet {
+    var scores: [Int?] = [nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil]
+    var rolls: [Int] = [0,0,0,0,0]
+    
+    private func count(dice: [Int]) -> [Int] {
+        var counts = [0, 0, 0, 0, 0, 0, 0]
+        for i in 0 ..< dice.count {
+            counts[dice[i]] += 1
+        }
+        return counts
     }
-    return counts
-}
-
-func score(dice: [Int], for box: ScoreBoxes) -> Int {
-    switch box {
-    case .ones:
-        return dice.reduce(0, { $0 + ($1 == 1 ? $1 : 0) })
-    case .twos:
-        return dice.reduce(0, { $0 + ($1 == 2 ? $1 : 0) })
-    case .threes:
-        return dice.reduce(0, { $0 + ($1 == 3 ? $1 : 0) })
-    case .fours:
-        return dice.reduce(0, { $0 + ($1 == 4 ? $1 : 0) })
-    case .fives:
-        return dice.reduce(0, { $0 + ($1 == 5 ? $1 : 0) })
-    case .sixes:
-        return dice.reduce(0, { $0 + ($1 == 6 ? $1 : 0) })
-    case .threeOfAKind:
-        let counts = count(dice: dice)
-        return counts.max()! >= 3 ? dice.reduce(0, +) : 0
-    case .fourOfAKind:
-        let counts = count(dice: dice)
-        return counts.max()! >= 4 ? dice.reduce(0, +) : 0
-    case .smallStraight:
-        let mask = dice.reduce(0, { $0 | 1 << $1 })
-        return mask & 30 == 30 || mask & 60 == 60 || mask & 120 == 120 ? 30 : 0
-    case .largeStraight:
-        let mask = dice.reduce(0, { $0 | 1 << $1 })
-        return mask & 62 == 62 || mask & 124 == 124 ? 40 : 0
-    case .fullHouse:
-        let counts = count(dice: dice)
-        return counts.contains(3) && counts.contains(2) ? 25 : 0
-    case .chance:
-        return dice.reduce(0, +)
-    case .yahtzee:
-        // TODO: Yahtzee bonus 100
-        let counts = count(dice: dice)
-        return counts.contains(5) ? 50 : 0
-    default:
-        return 0
+    
+    func value(box: ScoreBoxes) -> Int {
+        switch box {
+        case .ones:
+            return rolls.reduce(0, { $0 + ($1 == 1 ? $1 : 0) })
+        case .twos:
+            return rolls.reduce(0, { $0 + ($1 == 2 ? $1 : 0) })
+        case .threes:
+            return rolls.reduce(0, { $0 + ($1 == 3 ? $1 : 0) })
+        case .fours:
+            return rolls.reduce(0, { $0 + ($1 == 4 ? $1 : 0) })
+        case .fives:
+            return rolls.reduce(0, { $0 + ($1 == 5 ? $1 : 0) })
+        case .sixes:
+            return rolls.reduce(0, { $0 + ($1 == 6 ? $1 : 0) })
+        case .threeOfAKind:
+            let counts = count(dice: rolls)
+            return counts.max()! >= 3 ? rolls.reduce(0, +) : 0
+        case .fourOfAKind:
+            let counts = count(dice: rolls)
+            return counts.max()! >= 4 ? rolls.reduce(0, +) : 0
+        case .smallStraight:
+            let mask = rolls.reduce(0, { $0 | 1 << $1 })
+            return mask & 30 == 30 || mask & 60 == 60 || mask & 120 == 120 ? 30 : 0
+        case .largeStraight:
+            let mask = rolls.reduce(0, { $0 | 1 << $1 })
+            return mask & 62 == 62 || mask & 124 == 124 ? 40 : 0
+        case .fullHouse:
+            let counts = count(dice: rolls)
+            return counts.contains(3) && counts.contains(2) ? 25 : 0
+        case .chance:
+            return rolls.reduce(0, +)
+        case .yahtzee:
+            let counts = count(dice: rolls)
+            return counts.contains(5) ? (scores[ScoreBoxes.yahtzee.rawValue] == nil ? 50 : 100) : 0
+        default:
+            return 0
+        }
+    }
+    
+    func score(box: ScoreBoxes) {
+        self.scores[box.rawValue] = value(box: box)
+        self.scores[ScoreBoxes.total.rawValue] = self.scores[0..<ScoreBoxes.total.rawValue].reduce(0, { $0 + ($1 ?? 0 ) })
     }
 }
 
 class ViewController: UIViewController {
+    var sheet = ScoreSheet()
+    
     @IBOutlet weak var die1ImageView: UIImageView!
     @IBOutlet weak var die1HoldButton: UIButton!
     @IBOutlet weak var die2ImageView: UIImageView!
@@ -144,23 +155,23 @@ class ViewController: UIViewController {
     
     @IBAction func rollDiceDidPress(_ sender: UIButton) {
         if (die1HoldButton.tag == 0) {
-            die1ImageView.tag = Int.random(in: 1...6)
+            sheet.rolls[0] = Int.random(in: 1...6)
             die1ImageView.image = dice[0] // Clear image, force transition
         }
         if (die2HoldButton.tag == 0) {
-            die2ImageView.tag = Int.random(in: 1...6)
+            sheet.rolls[1] = Int.random(in: 1...6)
             die2ImageView.image = dice[0] // Clear image, force transition
         }
         if (die3HoldButton.tag == 0) {
-            die3ImageView.tag = Int.random(in: 1...6)
+            sheet.rolls[2] = Int.random(in: 1...6)
             die3ImageView.image = dice[0] // Clear image, force transition
         }
         if (die4HoldButton.tag == 0) {
-            die4ImageView.tag = Int.random(in: 1...6)
+            sheet.rolls[3] = Int.random(in: 1...6)
             die4ImageView.image = dice[0] // Clear image, force transition
         }
         if (die5HoldButton.tag == 0) {
-            die5ImageView.tag = Int.random(in: 1...6)
+            sheet.rolls[4] = Int.random(in: 1...6)
             die5ImageView.image = dice[0] // Clear image, force transition
         }
         rollCountLabel.tag = rollCountLabel.tag + 1
@@ -176,8 +187,7 @@ class ViewController: UIViewController {
             NSLog("Must roll at least once to score")
             return
         }
-        let dice = [die1ImageView.tag, die2ImageView.tag, die3ImageView.tag, die4ImageView.tag, die5ImageView.tag]
-        sender.setTitle("\(score(dice: dice, for: box))", for: .normal)
+        sheet.score(box: box)
         roundDidEnd()
     }
     
@@ -193,16 +203,22 @@ class ViewController: UIViewController {
     }
     
     func render(_ view: UIView? = nil) {
+        for button in [onesButton, twosButton, threesButton, foursButton, fivesButton, sixesButton, bonusButton,
+                    threeOfAKindButton, fourOfAKindButton, fullHouseButton, smallStraightButton, largeStraightButton, chanceButton, yahtzeeButton, totalButton] {
+            guard let button = button, let box = ScoreBoxes(rawValue: button.tag) else { continue }
+            button.setTitle("\(sheet.scores[button.tag] ?? sheet.value(box: box))", for: .normal)
+            button.isEnabled = sheet.scores[button.tag] == nil
+        }
         die1HoldButton.tintColor = die1HoldButton.tag != 0 ? UIColor.systemBlue : UIColor.systemGray
         die2HoldButton.tintColor = die2HoldButton.tag != 0 ? UIColor.systemBlue : UIColor.systemGray
         die3HoldButton.tintColor = die3HoldButton.tag != 0 ? UIColor.systemBlue : UIColor.systemGray
         die4HoldButton.tintColor = die4HoldButton.tag != 0 ? UIColor.systemBlue : UIColor.systemGray
         die5HoldButton.tintColor = die5HoldButton.tag != 0 ? UIColor.systemBlue : UIColor.systemGray
-        die1ImageView.setSymbolImage(dice[die1ImageView.tag], contentTransition: .replace.offUp)
-        die2ImageView.setSymbolImage(dice[die2ImageView.tag], contentTransition: .replace.offUp)
-        die3ImageView.setSymbolImage(dice[die3ImageView.tag], contentTransition: .replace.offUp)
-        die4ImageView.setSymbolImage(dice[die4ImageView.tag], contentTransition: .replace.offUp)
-        die5ImageView.setSymbolImage(dice[die5ImageView.tag], contentTransition: .replace.offUp)
+        die1ImageView.setSymbolImage(dice[sheet.rolls[0]], contentTransition: .replace.offUp)
+        die2ImageView.setSymbolImage(dice[sheet.rolls[1]], contentTransition: .replace.offUp)
+        die3ImageView.setSymbolImage(dice[sheet.rolls[2]], contentTransition: .replace.offUp)
+        die4ImageView.setSymbolImage(dice[sheet.rolls[3]], contentTransition: .replace.offUp)
+        die5ImageView.setSymbolImage(dice[sheet.rolls[4]], contentTransition: .replace.offUp)
         rollDiceButton.tintColor = rollCountLabel.tag < 3 ? UIColor.systemBlue : UIColor.systemGray
         rollDiceButton.isUserInteractionEnabled = rollCountLabel.tag < 3
         rollCountLabel.text = rollCountLabel.tag != 0 ? "\(rollCountLabel.tag) of 3" : ""
