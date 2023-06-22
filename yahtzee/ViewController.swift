@@ -81,6 +81,17 @@ class ScoreSheet {
     
     func score(box: ScoreBoxes) {
         self.scores[box.rawValue] = value(box: box)
+        if (box.rawValue <= ScoreBoxes.sixes.rawValue && self.scores[ScoreBoxes.bonus.rawValue] == nil) {
+            if let ones = self.scores[ScoreBoxes.ones.rawValue],
+               let twos = self.scores[ScoreBoxes.twos.rawValue],
+               let three = self.scores[ScoreBoxes.threes.rawValue],
+               let fours = self.scores[ScoreBoxes.fours.rawValue],
+               let fives = self.scores[ScoreBoxes.fives.rawValue],
+               let sixes = self.scores[ScoreBoxes.sixes.rawValue] {
+                let subtotal = ones + twos + three + fours + fives + sixes
+                self.scores[ScoreBoxes.bonus.rawValue] = subtotal >= 63 ? 35 : 0
+            }
+        }
         self.scores[ScoreBoxes.total.rawValue] = self.scores[0..<ScoreBoxes.total.rawValue].reduce(0, { $0 + ($1 ?? 0 ) })
     }
 }
@@ -209,6 +220,8 @@ class ViewController: UIViewController {
             button.setTitle("\(sheet.scores[button.tag] ?? sheet.value(box: box))", for: .normal)
             button.isEnabled = sheet.scores[button.tag] == nil
         }
+        bonusButton.isEnabled = false
+        totalButton.isEnabled = false
         die1HoldButton.tintColor = die1HoldButton.tag != 0 ? UIColor.systemBlue : UIColor.systemGray
         die2HoldButton.tintColor = die2HoldButton.tag != 0 ? UIColor.systemBlue : UIColor.systemGray
         die3HoldButton.tintColor = die3HoldButton.tag != 0 ? UIColor.systemBlue : UIColor.systemGray
