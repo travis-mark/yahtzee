@@ -4,10 +4,10 @@ Pentakill is my legally distinct clone of Yahtzee written as a one-off project t
 
 Current areas of interest:
 
-- SF Symbols animations (dice "rolling")
+- SF Symbols animations - dice "rolling"
 - TODO: OSLog usage
-- TODO: Swift Data game state
-- Xcode builtin git handling
+- Swift Data - game state
+- Xcode builtin git handling - still a potato (/shrug)
 - TODO: Add tests
 
 

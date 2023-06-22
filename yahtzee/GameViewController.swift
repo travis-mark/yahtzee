@@ -1,103 +1,12 @@
-//
-//  ViewController.swift
-//  yahtzee
-//
+//  yahtzee - GameViewController.swift
 //  Created by Travis Luckenbaugh on 6/16/23.
-//
 
 import UIKit
 
 // TODO: Game complete / reset
-// TODO: Add title screen (New Game, Continue) -> (Roll, Quit)
 
-enum ScoreBoxes: Int {
-    case ones = 1
-    case twos = 2
-    case threes = 3
-    case fours = 4
-    case fives = 5
-    case sixes = 6
-    case bonus = 7
-    case threeOfAKind = 8
-    case fourOfAKind = 9
-    case fullHouse = 10
-    case smallStraight = 11
-    case largeStraight = 12
-    case chance = 13
-    case yahtzee = 14
-    case total = 15
-}
-
-class ScoreSheet {
-    var scores: [Int?] = [nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil]
-    var rolls: [Int] = [0,0,0,0,0]
-    
-    private func count(dice: [Int]) -> [Int] {
-        var counts = [0, 0, 0, 0, 0, 0, 0]
-        for i in 0 ..< dice.count {
-            counts[dice[i]] += 1
-        }
-        return counts
-    }
-    
-    func value(box: ScoreBoxes) -> Int {
-        switch box {
-        case .ones:
-            return rolls.reduce(0, { $0 + ($1 == 1 ? $1 : 0) })
-        case .twos:
-            return rolls.reduce(0, { $0 + ($1 == 2 ? $1 : 0) })
-        case .threes:
-            return rolls.reduce(0, { $0 + ($1 == 3 ? $1 : 0) })
-        case .fours:
-            return rolls.reduce(0, { $0 + ($1 == 4 ? $1 : 0) })
-        case .fives:
-            return rolls.reduce(0, { $0 + ($1 == 5 ? $1 : 0) })
-        case .sixes:
-            return rolls.reduce(0, { $0 + ($1 == 6 ? $1 : 0) })
-        case .threeOfAKind:
-            let counts = count(dice: rolls)
-            return counts.max()! >= 3 ? rolls.reduce(0, +) : 0
-        case .fourOfAKind:
-            let counts = count(dice: rolls)
-            return counts.max()! >= 4 ? rolls.reduce(0, +) : 0
-        case .smallStraight:
-            let mask = rolls.reduce(0, { $0 | 1 << $1 })
-            return mask & 30 == 30 || mask & 60 == 60 || mask & 120 == 120 ? 30 : 0
-        case .largeStraight:
-            let mask = rolls.reduce(0, { $0 | 1 << $1 })
-            return mask & 62 == 62 || mask & 124 == 124 ? 40 : 0
-        case .fullHouse:
-            let counts = count(dice: rolls)
-            return counts.contains(3) && counts.contains(2) ? 25 : 0
-        case .chance:
-            return rolls.reduce(0, +)
-        case .yahtzee:
-            let counts = count(dice: rolls)
-            return counts.contains(5) ? (scores[ScoreBoxes.yahtzee.rawValue] == nil ? 50 : 100) : 0
-        default:
-            return 0
-        }
-    }
-    
-    func score(box: ScoreBoxes) {
-        self.scores[box.rawValue] = value(box: box)
-        if (box.rawValue <= ScoreBoxes.sixes.rawValue && self.scores[ScoreBoxes.bonus.rawValue] == nil) {
-            if let ones = self.scores[ScoreBoxes.ones.rawValue],
-               let twos = self.scores[ScoreBoxes.twos.rawValue],
-               let three = self.scores[ScoreBoxes.threes.rawValue],
-               let fours = self.scores[ScoreBoxes.fours.rawValue],
-               let fives = self.scores[ScoreBoxes.fives.rawValue],
-               let sixes = self.scores[ScoreBoxes.sixes.rawValue] {
-                let subtotal = ones + twos + three + fours + fives + sixes
-                self.scores[ScoreBoxes.bonus.rawValue] = subtotal >= 63 ? 35 : 0
-            }
-        }
-        self.scores[ScoreBoxes.total.rawValue] = self.scores[0..<ScoreBoxes.total.rawValue].reduce(0, { $0 + ($1 ?? 0 ) })
-    }
-}
-
-class ViewController: UIViewController {
-    var sheet = ScoreSheet()
+class GameViewController: UIViewController {
+    var sheet: ScoreSheet!
     
     @IBOutlet weak var die1ImageView: UIImageView!
     @IBOutlet weak var die1HoldButton: UIButton!
@@ -110,7 +19,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var die5ImageView: UIImageView!
     @IBOutlet weak var die5HoldButton: UIButton!
     @IBOutlet weak var rollDiceButton: UIButton!
-    @IBOutlet weak var rollCountLabel: UILabel!
     @IBOutlet weak var onesButton: UIButton!
     @IBOutlet weak var twosButton: UIButton!
     @IBOutlet weak var threesButton: UIButton!
@@ -185,8 +93,12 @@ class ViewController: UIViewController {
             sheet.rolls[4] = Int.random(in: 1...6)
             die5ImageView.image = dice[0] // Clear image, force transition
         }
-        rollCountLabel.tag = rollCountLabel.tag + 1
+        sheet.step = sheet.step + 1
         render()
+    }
+    
+    @IBAction func quitDidPress(_ sender: UIButton) {
+        dismiss(animated: true)
     }
     
     @IBAction func scoreButtonDidPress(_ sender: UIButton) {
@@ -194,7 +106,7 @@ class ViewController: UIViewController {
             NSLog("Invalid button press -- no scoring rules")
             return
         }
-        guard rollCountLabel.tag > 0 else {
+        guard sheet.step > 0 else {
             NSLog("Must roll at least once to score")
             return
         }
@@ -209,7 +121,7 @@ class ViewController: UIViewController {
         die3HoldButton.tag = 0
         die4HoldButton.tag = 0
         die5HoldButton.tag = 0
-        rollCountLabel.tag = 0
+        sheet.step = 0
         render()
     }
     
@@ -232,9 +144,9 @@ class ViewController: UIViewController {
         die3ImageView.setSymbolImage(dice[sheet.rolls[2]], contentTransition: .replace.offUp)
         die4ImageView.setSymbolImage(dice[sheet.rolls[3]], contentTransition: .replace.offUp)
         die5ImageView.setSymbolImage(dice[sheet.rolls[4]], contentTransition: .replace.offUp)
-        rollDiceButton.tintColor = rollCountLabel.tag < 3 ? UIColor.systemBlue : UIColor.systemGray
-        rollDiceButton.isUserInteractionEnabled = rollCountLabel.tag < 3
-        rollCountLabel.text = rollCountLabel.tag != 0 ? "\(rollCountLabel.tag) of 3" : ""
+        rollDiceButton.isUserInteractionEnabled = sheet.step < 3
+        rollDiceButton.setTitle(sheet.step != 0 ? "Roll (\(sheet.step) of 3)" : "Roll", for: .normal)
+        rollDiceButton.tintColor = sheet.step < 3 ? UIColor.systemBlue : UIColor.systemGray
     }
 }
 

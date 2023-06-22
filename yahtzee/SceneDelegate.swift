@@ -1,9 +1,5 @@
-//
-//  SceneDelegate.swift
-//  yahtzee
-//
+//  yahtzee - SceneDelegate.swift
 //  Created by Travis Luckenbaugh on 6/16/23.
-//
 
 import UIKit
 

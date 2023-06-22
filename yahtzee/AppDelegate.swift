@@ -1,17 +1,10 @@
-//
-//  AppDelegate.swift
-//  yahtzee
-//
+//  yahtzee - AppDelegate.swift
 //  Created by Travis Luckenbaugh on 6/16/23.
-//
 
 import UIKit
 import CoreData
 
-@main
-class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
+@main class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.

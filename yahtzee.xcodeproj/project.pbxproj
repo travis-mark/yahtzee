@@ -7,22 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F4E5CA62A44F3050077FCFA /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4E5CA52A44F3050077FCFA /* Model.swift */; };
+		1F4E5CA82A450BFC0077FCFA /* TitleScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4E5CA72A450BFC0077FCFA /* TitleScreenViewController.swift */; };
 		1F7DAA442A3D491C005051CB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7DAA432A3D491C005051CB /* AppDelegate.swift */; };
 		1F7DAA462A3D491C005051CB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7DAA452A3D491C005051CB /* SceneDelegate.swift */; };
-		1F7DAA482A3D491C005051CB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7DAA472A3D491C005051CB /* ViewController.swift */; };
+		1F7DAA482A3D491C005051CB /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7DAA472A3D491C005051CB /* GameViewController.swift */; };
 		1F7DAA4B2A3D491C005051CB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F7DAA492A3D491C005051CB /* Main.storyboard */; };
-		1F7DAA4E2A3D491C005051CB /* yahtzee.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1F7DAA4C2A3D491C005051CB /* yahtzee.xcdatamodeld */; };
 		1F7DAA502A3D491D005051CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F7DAA4F2A3D491D005051CB /* Assets.xcassets */; };
 		1F7DAA532A3D491D005051CB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F7DAA512A3D491D005051CB /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F4E5CA52A44F3050077FCFA /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
+		1F4E5CA72A450BFC0077FCFA /* TitleScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleScreenViewController.swift; sourceTree = "<group>"; };
 		1F7DAA402A3D491C005051CB /* yahtzee.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = yahtzee.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F7DAA432A3D491C005051CB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1F7DAA452A3D491C005051CB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		1F7DAA472A3D491C005051CB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		1F7DAA472A3D491C005051CB /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		1F7DAA4A2A3D491C005051CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		1F7DAA4D2A3D491C005051CB /* yahtzee.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = yahtzee.xcdatamodel; sourceTree = "<group>"; };
 		1F7DAA4F2A3D491D005051CB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1F7DAA522A3D491D005051CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1F7DAA542A3D491D005051CB /* yahtzee.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = yahtzee.entitlements; sourceTree = "<group>"; };
@@ -62,14 +64,15 @@
 			isa = PBXGroup;
 			children = (
 				1F7DAA432A3D491C005051CB /* AppDelegate.swift */,
+				1F4E5CA52A44F3050077FCFA /* Model.swift */,
 				1F7DAA452A3D491C005051CB /* SceneDelegate.swift */,
-				1F7DAA472A3D491C005051CB /* ViewController.swift */,
+				1F7DAA472A3D491C005051CB /* GameViewController.swift */,
+				1F4E5CA72A450BFC0077FCFA /* TitleScreenViewController.swift */,
 				1F7DAA492A3D491C005051CB /* Main.storyboard */,
 				1F7DAA4F2A3D491D005051CB /* Assets.xcassets */,
 				1F7DAA512A3D491D005051CB /* LaunchScreen.storyboard */,
 				1F7DAA542A3D491D005051CB /* yahtzee.entitlements */,
 				1F7DAA552A3D491D005051CB /* Info.plist */,
-				1F7DAA4C2A3D491C005051CB /* yahtzee.xcdatamodeld */,
 			);
 			path = yahtzee;
 			sourceTree = "<group>";
@@ -145,9 +148,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1F7DAA482A3D491C005051CB /* ViewController.swift in Sources */,
+				1F4E5CA62A44F3050077FCFA /* Model.swift in Sources */,
+				1F7DAA482A3D491C005051CB /* GameViewController.swift in Sources */,
 				1F7DAA442A3D491C005051CB /* AppDelegate.swift in Sources */,
-				1F7DAA4E2A3D491C005051CB /* yahtzee.xcdatamodeld in Sources */,
+				1F4E5CA82A450BFC0077FCFA /* TitleScreenViewController.swift in Sources */,
 				1F7DAA462A3D491C005051CB /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -377,19 +381,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		1F7DAA4C2A3D491C005051CB /* yahtzee.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				1F7DAA4D2A3D491C005051CB /* yahtzee.xcdatamodel */,
-			);
-			currentVersion = 1F7DAA4D2A3D491C005051CB /* yahtzee.xcdatamodel */;
-			path = yahtzee.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 1F7DAA382A3D491C005051CB /* Project object */;
 }
