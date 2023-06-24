@@ -4,8 +4,6 @@
 import Foundation
 import SwiftData
 
-let container = try! ModelContainer(for: ScoreSheet.self)
-
 enum ScoreBoxes: Int {
     case ones = 1
     case twos = 2
@@ -22,6 +20,16 @@ enum ScoreBoxes: Int {
     case chance = 13
     case yahtzee = 14
     case total = 15
+}
+
+@Model class GameState {
+    var currentGame: ScoreSheet?
+    var highScores: [ScoreSheet]
+    
+    init() {
+        currentGame = nil
+        highScores = []
+    }
 }
 
 @Model class ScoreSheet {
@@ -100,26 +108,25 @@ enum ScoreBoxes: Int {
         }
         self.scores[ScoreBoxes.total.rawValue] = self.scores[0..<ScoreBoxes.total.rawValue].reduce(0, { $0 + ($1 ?? 0 ) })
     }
+    
+    func isGameComplete() -> Bool {
+        // TODO: Redo when scores are layed out
+        return scores.filter({ $0 == nil }).count <= 1
+    }
 }
 
 @MainActor func getCurrentScoreSheet() -> ScoreSheet? {
-    do {
-        let descriptor = FetchDescriptor<ScoreSheet>()
-        let context = container.mainContext
-        return try context.fetch(descriptor).first
-    } catch {
-        NSLog(error.localizedDescription)
-        return nil
-    }
+    return AppDelegate.shared.gameState.currentGame
 }
 
 @MainActor func startNewGame() -> ScoreSheet {
-    let context = container.mainContext
+    let context = AppDelegate.shared.gameState.context!
     if let oldGame = getCurrentScoreSheet() {
         context.delete(object: oldGame)
     }
-    let object = ScoreSheet()
-    context.insert(object)
+    let newGame = ScoreSheet()
+    context.insert(newGame)
+    AppDelegate.shared.gameState.currentGame = newGame
     try! context.save()
-    return object
+    return newGame
 }

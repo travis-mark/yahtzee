@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F1F226A2A468C3700EA604D /* HighScoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1F22692A468C3700EA604D /* HighScoreViewController.swift */; };
 		1F4E5CA62A44F3050077FCFA /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4E5CA52A44F3050077FCFA /* Model.swift */; };
 		1F4E5CA82A450BFC0077FCFA /* TitleScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4E5CA72A450BFC0077FCFA /* TitleScreenViewController.swift */; };
 		1F7DAA442A3D491C005051CB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7DAA432A3D491C005051CB /* AppDelegate.swift */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F1F22692A468C3700EA604D /* HighScoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighScoreViewController.swift; sourceTree = "<group>"; };
 		1F4E5CA52A44F3050077FCFA /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		1F4E5CA72A450BFC0077FCFA /* TitleScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleScreenViewController.swift; sourceTree = "<group>"; };
 		1F7DAA402A3D491C005051CB /* yahtzee.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = yahtzee.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -68,6 +70,7 @@
 				1F7DAA452A3D491C005051CB /* SceneDelegate.swift */,
 				1F7DAA472A3D491C005051CB /* GameViewController.swift */,
 				1F4E5CA72A450BFC0077FCFA /* TitleScreenViewController.swift */,
+				1F1F22692A468C3700EA604D /* HighScoreViewController.swift */,
 				1F7DAA492A3D491C005051CB /* Main.storyboard */,
 				1F7DAA4F2A3D491D005051CB /* Assets.xcassets */,
 				1F7DAA512A3D491D005051CB /* LaunchScreen.storyboard */,
@@ -153,6 +156,7 @@
 				1F7DAA442A3D491C005051CB /* AppDelegate.swift in Sources */,
 				1F4E5CA82A450BFC0077FCFA /* TitleScreenViewController.swift in Sources */,
 				1F7DAA462A3D491C005051CB /* SceneDelegate.swift in Sources */,
+				1F1F226A2A468C3700EA604D /* HighScoreViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

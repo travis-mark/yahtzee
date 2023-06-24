@@ -116,12 +116,20 @@ class GameViewController: UIViewController {
     
     
     func roundDidEnd() {
-        die1HoldButton.tag = 0
-        die2HoldButton.tag = 0
-        die3HoldButton.tag = 0
-        die4HoldButton.tag = 0
-        die5HoldButton.tag = 0
-        sheet.step = 0
+        if sheet.isGameComplete() {
+            let game = AppDelegate.shared.gameState!
+            game.currentGame = nil
+            game.highScores.append(sheet)
+            try! game.context!.save()
+        } else {
+            die1HoldButton.tag = 0
+            die2HoldButton.tag = 0
+            die3HoldButton.tag = 0
+            die4HoldButton.tag = 0
+            die5HoldButton.tag = 0
+            sheet.step = 0
+        }
+        
         render()
     }
     

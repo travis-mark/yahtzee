@@ -11,8 +11,8 @@ class TitleScreenViewController: UIViewController {
     @IBOutlet weak var newGameButton: UIButton!
     @IBOutlet weak var continueButton: UIButton!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         currentGame = getCurrentScoreSheet()
     }
     
@@ -25,9 +25,19 @@ class TitleScreenViewController: UIViewController {
         performSegue(withIdentifier: "startGame", sender: nil)
     }
     
+    @IBAction func highScoresDidPress(_ sender: Any) {
+        performSegue(withIdentifier: "highScores", sender: nil)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "startGame", let vc = segue.destination as? GameViewController {
             vc.sheet = currentGame
         }
+        
+        if segue.identifier == "highScores", let vc = segue.destination as? HighScoreViewController {
+            // TODO: Sort and take top 5
+            vc.topGames = AppDelegate.shared.gameState.highScores
+        }
+        
     }
 }
