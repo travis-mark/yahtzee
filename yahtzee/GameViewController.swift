@@ -3,10 +3,8 @@
 
 import UIKit
 
-// TODO: Game complete / reset
-
 class GameViewController: UIViewController {
-    var sheet: ScoreSheet!
+    var game: Game!
     
     @IBOutlet weak var die1ImageView: UIImageView!
     @IBOutlet weak var die1HoldButton: UIButton!
@@ -48,6 +46,11 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        die1HoldButton.tag = 0
+        die2HoldButton.tag = 1
+        die3HoldButton.tag = 2
+        die4HoldButton.tag = 3
+        die5HoldButton.tag = 4
         onesButton.tag = ScoreBoxes.ones.rawValue
         twosButton.tag = ScoreBoxes.twos.rawValue
         threesButton.tag = ScoreBoxes.threes.rawValue
@@ -68,32 +71,28 @@ class GameViewController: UIViewController {
     }
     
     @IBAction func dieHoldDidPress(_ sender: UIButton) {
-        sender.tag = sender.tag == 0 ? 1 : 0
+        game.toggleHold(sender.tag)
         render(sender)
     }
     
     @IBAction func rollDiceDidPress(_ sender: UIButton) {
-        if (die1HoldButton.tag == 0) {
-            sheet.rolls[0] = Int.random(in: 1...6)
-            die1ImageView.image = dice[0] // Clear image, force transition
+        // Clear images to force transition
+        if (!game.holds[0]) {
+            die1ImageView.image = dice[0]
         }
-        if (die2HoldButton.tag == 0) {
-            sheet.rolls[1] = Int.random(in: 1...6)
-            die2ImageView.image = dice[0] // Clear image, force transition
+        if (!game.holds[1]) {
+            die2ImageView.image = dice[0]
         }
-        if (die3HoldButton.tag == 0) {
-            sheet.rolls[2] = Int.random(in: 1...6)
-            die3ImageView.image = dice[0] // Clear image, force transition
+        if (!game.holds[2]) {
+            die3ImageView.image = dice[0]
         }
-        if (die4HoldButton.tag == 0) {
-            sheet.rolls[3] = Int.random(in: 1...6)
-            die4ImageView.image = dice[0] // Clear image, force transition
+        if (!game.holds[3]) {
+            die4ImageView.image = dice[0]
         }
-        if (die5HoldButton.tag == 0) {
-            sheet.rolls[4] = Int.random(in: 1...6)
-            die5ImageView.image = dice[0] // Clear image, force transition
+        if (!game.holds[4]) {
+            die5ImageView.image = dice[0]
         }
-        sheet.step = sheet.step + 1
+        game.roll()
         render()
     }
     
@@ -106,55 +105,48 @@ class GameViewController: UIViewController {
             NSLog("Invalid button press -- no scoring rules")
             return
         }
-        guard sheet.step > 0 else {
+        guard game.step > 0 else {
             NSLog("Must roll at least once to score")
             return
         }
-        sheet.score(box: box)
+        game.score(box: box)
         roundDidEnd()
     }
     
     
     func roundDidEnd() {
-        if sheet.isGameComplete() {
-            let game = AppDelegate.shared.gameState!
-            game.currentGame = nil
-            game.highScores.append(sheet)
-            try! game.context!.save()
-        } else {
-            die1HoldButton.tag = 0
-            die2HoldButton.tag = 0
-            die3HoldButton.tag = 0
-            die4HoldButton.tag = 0
-            die5HoldButton.tag = 0
-            sheet.step = 0
+        if game.sheet.isGameComplete() {
+            let gameState = AppDelegate.shared.gameState!
+            gameState.highScores.append(game.sheet)
+            gameState.currentGame = nil
+            try! gameState.context!.save()
         }
-        
         render()
     }
     
     func render(_ view: UIView? = nil) {
+        let sheet = game.sheet
         for button in [onesButton, twosButton, threesButton, foursButton, fivesButton, sixesButton, bonusButton,
                     threeOfAKindButton, fourOfAKindButton, fullHouseButton, smallStraightButton, largeStraightButton, chanceButton, yahtzeeButton, totalButton] {
             guard let button = button, let box = ScoreBoxes(rawValue: button.tag) else { continue }
-            button.setTitle("\(sheet.scores[button.tag] ?? sheet.value(box: box))", for: .normal)
+            button.setTitle("\(sheet.scores[button.tag] ?? sheet.value(rolls: game.rolls, box: box))", for: .normal)
             button.isEnabled = sheet.scores[button.tag] == nil
         }
         bonusButton.isEnabled = false
         totalButton.isEnabled = false
-        die1HoldButton.tintColor = die1HoldButton.tag != 0 ? UIColor.systemBlue : UIColor.systemGray
-        die2HoldButton.tintColor = die2HoldButton.tag != 0 ? UIColor.systemBlue : UIColor.systemGray
-        die3HoldButton.tintColor = die3HoldButton.tag != 0 ? UIColor.systemBlue : UIColor.systemGray
-        die4HoldButton.tintColor = die4HoldButton.tag != 0 ? UIColor.systemBlue : UIColor.systemGray
-        die5HoldButton.tintColor = die5HoldButton.tag != 0 ? UIColor.systemBlue : UIColor.systemGray
-        die1ImageView.setSymbolImage(dice[sheet.rolls[0]], contentTransition: .replace.offUp)
-        die2ImageView.setSymbolImage(dice[sheet.rolls[1]], contentTransition: .replace.offUp)
-        die3ImageView.setSymbolImage(dice[sheet.rolls[2]], contentTransition: .replace.offUp)
-        die4ImageView.setSymbolImage(dice[sheet.rolls[3]], contentTransition: .replace.offUp)
-        die5ImageView.setSymbolImage(dice[sheet.rolls[4]], contentTransition: .replace.offUp)
-        rollDiceButton.isUserInteractionEnabled = sheet.step < 3
-        rollDiceButton.setTitle(sheet.step != 0 ? "Roll (\(sheet.step) of 3)" : "Roll", for: .normal)
-        rollDiceButton.tintColor = sheet.step < 3 ? UIColor.systemBlue : UIColor.systemGray
+        die1HoldButton.tintColor = game.holds[0] ? UIColor.systemBlue : UIColor.systemGray
+        die2HoldButton.tintColor = game.holds[1] ? UIColor.systemBlue : UIColor.systemGray
+        die3HoldButton.tintColor = game.holds[2] ? UIColor.systemBlue : UIColor.systemGray
+        die4HoldButton.tintColor = game.holds[3] ? UIColor.systemBlue : UIColor.systemGray
+        die5HoldButton.tintColor = game.holds[4] ? UIColor.systemBlue : UIColor.systemGray
+        die1ImageView.setSymbolImage(dice[game.rolls[0]], contentTransition: .replace.offUp)
+        die2ImageView.setSymbolImage(dice[game.rolls[1]], contentTransition: .replace.offUp)
+        die3ImageView.setSymbolImage(dice[game.rolls[2]], contentTransition: .replace.offUp)
+        die4ImageView.setSymbolImage(dice[game.rolls[3]], contentTransition: .replace.offUp)
+        die5ImageView.setSymbolImage(dice[game.rolls[4]], contentTransition: .replace.offUp)
+        rollDiceButton.isUserInteractionEnabled = game.isRollEnabled
+        rollDiceButton.setTitle(game.step != 0 ? "Roll (\(game.step) of 3)" : "Roll", for: .normal)
+        rollDiceButton.tintColor = game.isRollEnabled ? UIColor.systemBlue : UIColor.systemGray
     }
 }
 

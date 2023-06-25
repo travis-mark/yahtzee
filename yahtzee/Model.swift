@@ -22,25 +22,11 @@ enum ScoreBoxes: Int {
     case total = 15
 }
 
-@Model class GameState {
-    var currentGame: ScoreSheet?
-    var highScores: [ScoreSheet]
-    
-    init() {
-        currentGame = nil
-        highScores = []
-    }
-}
-
 @Model class ScoreSheet {
     var scores: [Int?]
-    var rolls: [Int]
-    var step: Int
     
-    init(scores: [Int?] = [nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil], rolls: [Int] = [0,0,0,0,0], step: Int = 0) {
+    init(scores: [Int?] = [nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil]) {
         self.scores = scores
-        self.rolls = rolls
-        self.step = step
     }
     
     private func count(dice: [Int]) -> [Int] {
@@ -51,10 +37,7 @@ enum ScoreBoxes: Int {
         return counts
     }
     
-    func value(box: ScoreBoxes) -> Int {
-        guard step > 0 else {
-            return 0
-        }
+    func value(rolls: [Int], box: ScoreBoxes) -> Int {
         switch box {
         case .ones:
             return rolls.reduce(0, { $0 + ($1 == 1 ? $1 : 0) })
@@ -93,40 +76,95 @@ enum ScoreBoxes: Int {
         }
     }
     
-    func score(box: ScoreBoxes) {
-        self.scores[box.rawValue] = value(box: box)
-        if (box.rawValue <= ScoreBoxes.sixes.rawValue && self.scores[ScoreBoxes.bonus.rawValue] == nil) {
-            if let ones = self.scores[ScoreBoxes.ones.rawValue],
-               let twos = self.scores[ScoreBoxes.twos.rawValue],
-               let three = self.scores[ScoreBoxes.threes.rawValue],
-               let fours = self.scores[ScoreBoxes.fours.rawValue],
-               let fives = self.scores[ScoreBoxes.fives.rawValue],
-               let sixes = self.scores[ScoreBoxes.sixes.rawValue] {
-                let subtotal = ones + twos + three + fours + fives + sixes
-                self.scores[ScoreBoxes.bonus.rawValue] = subtotal >= 63 ? 35 : 0
-            }
-        }
-        self.scores[ScoreBoxes.total.rawValue] = self.scores[0..<ScoreBoxes.total.rawValue].reduce(0, { $0 + ($1 ?? 0 ) })
-    }
-    
     func isGameComplete() -> Bool {
         // TODO: Redo when scores are layed out
         return scores.filter({ $0 == nil }).count <= 1
     }
 }
 
-@MainActor func getCurrentScoreSheet() -> ScoreSheet? {
-    return AppDelegate.shared.gameState.currentGame
+@Model class Game {
+    var sheet: ScoreSheet
+    var rolls: [Int]
+    var holds: [Bool]
+    var step: Int
+    
+    init() {
+        sheet = ScoreSheet()
+        rolls = [0,0,0,0,0]
+        holds = [false, false, false, false, false]
+        step = 0
+    }
+    
+    var isRollEnabled: Bool {
+        return step < 3 && !sheet.isGameComplete()
+    }
+    
+    func roll() {
+        assert(isRollEnabled)
+        assert(holds.count == rolls.count)
+        for i in 0..<holds.count {
+            if (holds[i] == false) {
+                rolls[i] = Int.random(in: 1...6)
+            }
+        }
+        step = step + 1
+    }
+    
+    func toggleHold(_ index: Int) {
+        assert(index < holds.count)
+        holds[index] = !holds[index]
+    }
+    
+    func score(box: ScoreBoxes) {
+        sheet.scores[box.rawValue] = sheet.value(rolls: rolls, box: box)
+        if (box.rawValue <= ScoreBoxes.sixes.rawValue && sheet.scores[ScoreBoxes.bonus.rawValue] == nil) {
+            if let ones = sheet.scores[ScoreBoxes.ones.rawValue],
+               let twos = sheet.scores[ScoreBoxes.twos.rawValue],
+               let three = sheet.scores[ScoreBoxes.threes.rawValue],
+               let fours = sheet.scores[ScoreBoxes.fours.rawValue],
+               let fives = sheet.scores[ScoreBoxes.fives.rawValue],
+               let sixes = sheet.scores[ScoreBoxes.sixes.rawValue] {
+                let subtotal = ones + twos + three + fours + fives + sixes
+                sheet.scores[ScoreBoxes.bonus.rawValue] = subtotal >= 63 ? 35 : 0
+            }
+        }
+        sheet.scores[ScoreBoxes.total.rawValue] = sheet.scores[0..<ScoreBoxes.total.rawValue].reduce(0, { $0 + ($1 ?? 0 ) })
+        holds = [false, false, false, false, false]
+        step = 0
+    }
 }
 
-@MainActor func startNewGame() -> ScoreSheet {
-    let context = AppDelegate.shared.gameState.context!
-    if let oldGame = getCurrentScoreSheet() {
-        context.delete(object: oldGame)
+@Model class GameState {
+    var currentGame: Game?
+    var highScores: [ScoreSheet]
+    
+    init() {
+        currentGame = nil
+        highScores = []
     }
-    let newGame = ScoreSheet()
-    context.insert(newGame)
+}
+
+
+
+@MainActor func startNewGame() -> Game {
+    let oldGame = AppDelegate.shared.gameState.currentGame
+    let oldGameContext = oldGame?.context
+    let newGame = Game()
+    let newGameContext = AppDelegate.shared.gameState.context
+    // Delete previous game if found
+    if let oldGame = oldGame, let oldGameContext = oldGameContext {
+        assert(oldGameContext == newGameContext)
+        oldGameContext.delete(object: oldGame)
+    }
+    // Save new game to database if in not inside a test
+    if let newGameContext = newGameContext {
+        do {
+            newGameContext.insert(newGame)
+            try newGameContext.save()
+        } catch {
+            NSLog(error.localizedDescription)
+        }
+    }
     AppDelegate.shared.gameState.currentGame = newGame
-    try! context.save()
     return newGame
 }
