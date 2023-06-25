@@ -49,6 +49,17 @@
                                     <action selector="highScoresDidPress:" destination="jwZ-zL-YyT" eventType="touchUpInside" id="2zB-lA-h9U"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HcX-Ry-v7c">
+                                <rect key="frame" x="76" y="446.5" width="168" height="41"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" image="dice.fill" catalog="system" title="Options">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage"/>
+                                    <fontDescription key="titleFontDescription" style="UICTFontTextStyleTitle2"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="optionsDidPress:" destination="jwZ-zL-YyT" eventType="touchUpInside" id="xWj-JX-Atk"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="MaM-VM-rqD"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -56,11 +67,14 @@
                             <constraint firstItem="Fq0-u7-0SJ" firstAttribute="centerX" secondItem="N8s-GC-Cwr" secondAttribute="centerX" id="1gm-gT-6ao"/>
                             <constraint firstItem="R38-EV-guG" firstAttribute="leading" secondItem="CoK-10-hTG" secondAttribute="leading" id="F0H-Yv-V6t"/>
                             <constraint firstItem="CoK-10-hTG" firstAttribute="top" secondItem="Fq0-u7-0SJ" secondAttribute="bottom" constant="20" id="Fu7-X5-lNH"/>
+                            <constraint firstItem="HcX-Ry-v7c" firstAttribute="leading" secondItem="R38-EV-guG" secondAttribute="leading" id="Kvm-eU-mas"/>
                             <constraint firstItem="Fq0-u7-0SJ" firstAttribute="centerY" secondItem="N8s-GC-Cwr" secondAttribute="centerY" id="PXj-Mb-BSl"/>
                             <constraint firstItem="CoK-10-hTG" firstAttribute="trailing" secondItem="Fq0-u7-0SJ" secondAttribute="trailing" id="U5v-lk-JRl"/>
                             <constraint firstItem="CoK-10-hTG" firstAttribute="leading" secondItem="Fq0-u7-0SJ" secondAttribute="leading" id="Y6k-Ki-TSD"/>
+                            <constraint firstItem="HcX-Ry-v7c" firstAttribute="top" secondItem="R38-EV-guG" secondAttribute="bottom" constant="20" id="cH9-II-Ef8"/>
                             <constraint firstItem="R38-EV-guG" firstAttribute="trailing" secondItem="CoK-10-hTG" secondAttribute="trailing" id="o62-rH-nyh"/>
                             <constraint firstItem="R38-EV-guG" firstAttribute="top" secondItem="CoK-10-hTG" secondAttribute="bottom" constant="20" id="q2Q-eV-2RK"/>
+                            <constraint firstItem="HcX-Ry-v7c" firstAttribute="trailing" secondItem="R38-EV-guG" secondAttribute="trailing" id="zrj-zk-qD7"/>
                         </constraints>
                     </view>
                     <connections>
@@ -68,6 +82,7 @@
                         <outlet property="newGameButton" destination="Fq0-u7-0SJ" id="2cz-Ds-IZS"/>
                         <segue destination="BYZ-38-t0r" kind="presentation" identifier="startGame" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="9Xg-TG-uKa"/>
                         <segue destination="pFz-EO-6HC" kind="presentation" identifier="highScores" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="SKB-OL-i8T"/>
+                        <segue destination="Pmb-5q-EKx" kind="presentation" identifier="options" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="PiQ-hI-K26"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sie-wU-3Hn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -599,6 +614,47 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="41.25" y="3.1690140845070425"/>
+        </scene>
+        <!--Options View Controller-->
+        <scene sceneID="K4W-ny-4jt">
+            <objects>
+                <viewController id="Pmb-5q-EKx" customClass="OptionsViewController" customModule="yahtzee" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8Qo-Ka-KGq">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lol-N2-w41">
+                                <rect key="frame" x="260" y="0.0" width="60" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="X1Z-g3-OVj"/>
+                                    <constraint firstAttribute="height" constant="60" id="a2o-4B-4fw"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="xmark.circle" catalog="system"/>
+                                <connections>
+                                    <action selector="closeDidPress:" destination="Pmb-5q-EKx" eventType="touchUpInside" id="tyG-ha-B7a"/>
+                                </connections>
+                            </button>
+                            <colorWell contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="bcT-DE-4Ba">
+                                <rect key="frame" x="20" y="68" width="28" height="28"/>
+                            </colorWell>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Byd-7p-oMM"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Lol-N2-w41" firstAttribute="trailing" secondItem="Byd-7p-oMM" secondAttribute="trailing" id="Cji-de-Q2Y"/>
+                            <constraint firstItem="Lol-N2-w41" firstAttribute="top" secondItem="Byd-7p-oMM" secondAttribute="top" id="S5H-fb-hw0"/>
+                            <constraint firstItem="bcT-DE-4Ba" firstAttribute="leading" secondItem="Byd-7p-oMM" secondAttribute="leading" constant="20" id="V0e-J3-aYM"/>
+                            <constraint firstItem="bcT-DE-4Ba" firstAttribute="top" secondItem="Lol-N2-w41" secondAttribute="bottom" constant="8" id="nC8-BX-10Z"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="backgroundColorWell" destination="bcT-DE-4Ba" id="21Y-dw-58q"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="jxc-Bz-p3T" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-819" y="803"/>
         </scene>
         <!--High Score View Controller-->
         <scene sceneID="2sn-LX-oYd">

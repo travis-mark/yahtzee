@@ -29,6 +29,10 @@ class TitleScreenViewController: UIViewController {
         performSegue(withIdentifier: "highScores", sender: nil)
     }
     
+    @IBAction func optionsDidPress(_ sender: Any) {
+        performSegue(withIdentifier: "options", sender: nil)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "startGame", let vc = segue.destination as? GameViewController {
             vc.sheet = currentGame
