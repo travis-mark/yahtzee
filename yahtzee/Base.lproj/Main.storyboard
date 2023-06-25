@@ -418,7 +418,6 @@
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="quitDidPress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8lf-7S-xax"/>
-                                    <action selector="rollDiceDidPress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Q9U-lU-Rbe"/>
                                 </connections>
                             </button>
                         </subviews>
