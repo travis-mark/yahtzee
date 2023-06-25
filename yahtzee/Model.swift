@@ -95,6 +95,10 @@ enum ScoreBoxes: Int {
         step = 0
     }
     
+    var isRoundStarted: Bool {
+        return step > 0
+    }
+    
     var isRollEnabled: Bool {
         return step < 3 && !sheet.isGameComplete()
     }

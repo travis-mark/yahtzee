@@ -101,15 +101,10 @@ class GameViewController: UIViewController {
     }
     
     @IBAction func scoreButtonDidPress(_ sender: UIButton) {
-        guard let box = ScoreBoxes(rawValue: sender.tag) else {
-            NSLog("Invalid button press -- no scoring rules")
-            return
-        }
-        guard game.step > 0 else {
-            NSLog("Must roll at least once to score")
-            return
-        }
-        game.score(box: box)
+        let box = ScoreBoxes(rawValue: sender.tag)
+        assert(box != nil, "Invalid button press -- no scoring rules")
+        assert(game.isRoundStarted, "Must roll at least once to score")
+        game.score(box: box!)
         roundDidEnd()
     }
     
@@ -125,12 +120,11 @@ class GameViewController: UIViewController {
     }
     
     func render(_ view: UIView? = nil) {
-        let sheet = game.sheet
         for button in [onesButton, twosButton, threesButton, foursButton, fivesButton, sixesButton, bonusButton,
                     threeOfAKindButton, fourOfAKindButton, fullHouseButton, smallStraightButton, largeStraightButton, chanceButton, yahtzeeButton, totalButton] {
             guard let button = button, let box = ScoreBoxes(rawValue: button.tag) else { continue }
-            button.setTitle("\(sheet.scores[button.tag] ?? sheet.value(rolls: game.rolls, box: box))", for: .normal)
-            button.isEnabled = sheet.scores[button.tag] == nil
+            button.setTitle("\(game.sheet.scores[button.tag] ?? game.sheet.value(rolls: game.rolls, box: box))", for: .normal)
+            button.isEnabled = game.isRoundStarted && game.sheet.scores[button.tag] == nil
         }
         bonusButton.isEnabled = false
         totalButton.isEnabled = false
