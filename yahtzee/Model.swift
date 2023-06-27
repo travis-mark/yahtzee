@@ -30,62 +30,68 @@ import SwiftData
         holds = [false, false, false, false, false]
         step = 0
     }
-    
+}
+
+typealias ScoreBox = KeyPath<Game, Int?>
+
+private func count(dice: [Int]) -> [Int] {
+    var counts = [0, 0, 0, 0, 0, 0, 0]
+    for i in 0 ..< dice.count {
+        counts[dice[i]] += 1
+    }
+    return counts
+}
+
+func value(rolls: [Int], box: ScoreBox) -> Int {
+    switch box {
+    case \.ones:
+        return rolls.reduce(0, { $0 + ($1 == 1 ? $1 : 0) })
+    case \.twos:
+        return rolls.reduce(0, { $0 + ($1 == 2 ? $1 : 0) })
+    case \.threes:
+        return rolls.reduce(0, { $0 + ($1 == 3 ? $1 : 0) })
+    case \.fours:
+        return rolls.reduce(0, { $0 + ($1 == 4 ? $1 : 0) })
+    case \.fives:
+        return rolls.reduce(0, { $0 + ($1 == 5 ? $1 : 0) })
+    case \.sixes:
+        return rolls.reduce(0, { $0 + ($1 == 6 ? $1 : 0) })
+    case \.threeOfAKind:
+        let counts = count(dice: rolls)
+        return counts.max()! >= 3 ? rolls.reduce(0, +) : 0
+    case \.fourOfAKind:
+        let counts = count(dice: rolls)
+        return counts.max()! >= 4 ? rolls.reduce(0, +) : 0
+    case \.smallStraight:
+        let mask = rolls.reduce(0, { $0 | 1 << $1 })
+        return mask & 30 == 30 || mask & 60 == 60 || mask & 120 == 120 ? 30 : 0
+    case \.largeStraight:
+        let mask = rolls.reduce(0, { $0 | 1 << $1 })
+        return mask & 62 == 62 || mask & 124 == 124 ? 40 : 0
+    case \.fullHouse:
+        let counts = count(dice: rolls)
+        return counts.contains(3) && counts.contains(2) ? 25 : 0
+    case \.chance:
+        return rolls.reduce(0, +)
+    case \.yahtzee:
+        let counts = count(dice: rolls)
+        return counts.contains(5) ? 50 : 0
+    default:
+        return 0
+    }
+}
+
+func addUp(_ scores: Int?...) -> Int {
+    return scores.reduce(0, { $0 + ($1 ?? 0)})
+}
+
+extension Game {
     var isRoundStarted: Bool {
         return step > 0
     }
     
     var isRollEnabled: Bool {
         return step < 3 && !isGameComplete()
-    }
-    
-    private func count(dice: [Int]) -> [Int] {
-        var counts = [0, 0, 0, 0, 0, 0, 0]
-        for i in 0 ..< dice.count {
-            counts[dice[i]] += 1
-        }
-        return counts
-    }
-    
-    func value(rolls: [Int], box: KeyPath<Game, Int?>) -> Int {
-        switch box {
-        case \.ones:
-            return rolls.reduce(0, { $0 + ($1 == 1 ? $1 : 0) })
-        case \.twos:
-            return rolls.reduce(0, { $0 + ($1 == 2 ? $1 : 0) })
-        case \.threes:
-            return rolls.reduce(0, { $0 + ($1 == 3 ? $1 : 0) })
-        case \.fours:
-            return rolls.reduce(0, { $0 + ($1 == 4 ? $1 : 0) })
-        case \.fives:
-            return rolls.reduce(0, { $0 + ($1 == 5 ? $1 : 0) })
-        case \.sixes:
-            return rolls.reduce(0, { $0 + ($1 == 6 ? $1 : 0) })
-        case \.threeOfAKind:
-            let counts = count(dice: rolls)
-            return counts.max()! >= 3 ? rolls.reduce(0, +) : 0
-        case \.fourOfAKind:
-            let counts = count(dice: rolls)
-            return counts.max()! >= 4 ? rolls.reduce(0, +) : 0
-        case \.smallStraight:
-            let mask = rolls.reduce(0, { $0 | 1 << $1 })
-            return mask & 30 == 30 || mask & 60 == 60 || mask & 120 == 120 ? 30 : 0
-        case \.largeStraight:
-            let mask = rolls.reduce(0, { $0 | 1 << $1 })
-            return mask & 62 == 62 || mask & 124 == 124 ? 40 : 0
-        case \.fullHouse:
-            let counts = count(dice: rolls)
-            return counts.contains(3) && counts.contains(2) ? 25 : 0
-        case \.chance:
-            return rolls.reduce(0, +)
-        case \.yahtzee:
-            let counts = count(dice: rolls)
-            return counts.contains(5) ? (yahtzee == nil ? 50 : 100) : 0
-        case \.total:
-            return total ?? 0
-        default:
-            return 0
-        }
     }
     
     func isGameComplete() -> Bool {
@@ -121,83 +127,43 @@ import SwiftData
         holds[index] = !holds[index]
     }
     
-    func score(box: KeyPath<Game, Int?>) {
+    func score(box: ScoreBox) {
+        let value = value(rolls: rolls, box: box)
         switch box {
         case \.ones:
-            let value = value(rolls: rolls, box: box)
             ones = value
-            subtotal = subtotal ?? 0 + value
-            total = total ?? 0 + value
         case \.twos:
-            let value = value(rolls: rolls, box: box)
             twos = value
-            subtotal = subtotal ?? 0 + value
-            total = total ?? 0 + value
         case \.threes:
-            let value = value(rolls: rolls, box: box)
             threes = value
-            subtotal = subtotal ?? 0 + value
-            total = total ?? 0 + value
         case \.fours:
-            let value = value(rolls: rolls, box: box)
             fours = value
-            subtotal = subtotal ?? 0 + value
-            total = total ?? 0 + value
         case \.fives:
-            let value = value(rolls: rolls, box: box)
             fives = value
-            subtotal = subtotal ?? 0 + value
-            total = total ?? 0 + value
         case \.sixes:
-            let value = value(rolls: rolls, box: box)
             sixes = value
-            subtotal = subtotal ?? 0 + value
-            total = total ?? 0 + value
         case \.bonus:
-            let value = subtotal ?? 0 >= 63 ? 35 : 0
             bonus = value
-            total = total ?? 0 + value
         case \.threeOfAKind:
-            let value = value(rolls: rolls, box: box)
             threeOfAKind = value
-            total = total ?? 0 + value
         case \.fourOfAKind:
-            let value = value(rolls: rolls, box: box)
             fourOfAKind = value
-            total = total ?? 0 + value
         case \.fullHouse:
-            let value = value(rolls: rolls, box: box)
             fullHouse = value
-            total = total ?? 0 + value
         case \.smallStraight:
-            let value = value(rolls: rolls, box: box)
             smallStraight = value
-            total = total ?? 0 + value
         case \.largeStraight:
-            let value = value(rolls: rolls, box: box)
             largeStraight = value
-            total = total ?? 0 + value
         case \.chance:
-            let value = value(rolls: rolls, box: box)
             chance = value
-            total = total ?? 0 + value
         case \.yahtzee:
-            let value = value(rolls: rolls, box: box)
             yahtzee = value
-            total = total ?? 0 + value
         default:
             break
         }
-        if bonus == nil,
-           ones != nil,
-           twos != nil,
-           threes != nil,
-           fours != nil,
-           fives != nil,
-           sixes != nil
-        {
-            score(box: \.bonus)
-        }
+        subtotal = addUp(ones, twos, threes, fours, fives, sixes)
+        bonus = subtotal! > 63 ? 35 : 0
+        total = addUp(subtotal, bonus, threeOfAKind, fourOfAKind, fullHouse, smallStraight, largeStraight, chance, yahtzee, 0)
         holds = [false, false, false, false, false]
         step = 0
     }
@@ -220,8 +186,6 @@ import SwiftData
         highScores = []
     }
 }
-
-
 
 @MainActor func startNewGame() -> Game {
     let oldGame = AppDelegate.shared.gameState.currentGame

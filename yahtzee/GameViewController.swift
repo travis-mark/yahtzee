@@ -88,6 +88,7 @@ class GameViewController: UIViewController {
         assert(box != nil, "Invalid button press -- no scoring rules")
         assert(game.isRoundStarted, "Must roll at least once to score")
         game.score(box: box!)
+        sender.isEnabled = false
         roundDidEnd()
     }
     
@@ -100,7 +101,7 @@ class GameViewController: UIViewController {
             context.insert(object: highScore)
             gameState.highScores.append(highScore)
             gameState.currentGame = nil
-//            context.delete(object: game)
+            context.delete(object: game)
             try! gameState.context!.save()
         } else {
             render()
@@ -108,7 +109,7 @@ class GameViewController: UIViewController {
         
     }
     
-    func keyPath(for sender: UIButton) -> KeyPath<Game, Int?>? {
+    func keyPath(for sender: UIButton) -> ScoreBox? {
         if sender === onesButton { return \.ones }
         if sender === twosButton { return \.twos }
         if sender === threesButton { return \.threes }
@@ -134,7 +135,7 @@ class GameViewController: UIViewController {
             guard let button = button else { continue }
             guard let box = keyPath(for: button) else { continue }
             guard let game = game else { continue }
-            button.setTitle("\(game[keyPath: box] ?? game.value(rolls: game.rolls, box: box))", for: .normal)
+            button.setTitle("\(game[keyPath: box] ?? yahtzee.value(rolls: game.rolls, box: box))", for: .normal)
             button.isEnabled = game.isRoundStarted && game[keyPath: box] == nil
         }
         bonusButton.isEnabled = false
