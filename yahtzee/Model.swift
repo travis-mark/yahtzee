@@ -166,7 +166,7 @@ enum ScoreBoxes: Int {
             newGameContext.insert(newGame)
             try newGameContext.save()
         } catch {
-            NSLog(error.localizedDescription)
+            log.error("Save new Game failed :: \(error.localizedDescription, privacy: .public)")
         }
     }
     AppDelegate.shared.gameState.currentGame = newGame

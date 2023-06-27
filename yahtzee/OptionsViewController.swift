@@ -16,6 +16,7 @@ class OptionsViewController: UIViewController {
     }
     
     @IBAction func backgroundColorWellValueDidChange(_ sender: Any) {
-        NSLog(backgroundColorWell.selectedColor?.description ?? "NULL")
+        let color = backgroundColorWell.selectedColor?.description ?? "nil"
+        log.info("Background color set = \(color, privacy: .private)")
     }
 }

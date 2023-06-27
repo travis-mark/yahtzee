@@ -112,8 +112,10 @@ class GameViewController: UIViewController {
     func roundDidEnd() {
         if game.sheet.isGameComplete() {
             let gameState = AppDelegate.shared.gameState!
+            let context = gameState.context!
             gameState.highScores.append(game.sheet)
             gameState.currentGame = nil
+            context.delete(object: game)
             try! gameState.context!.save()
         }
         render()

@@ -3,6 +3,7 @@
 
 import UIKit
 import SwiftData
+import os
 
 @main class AppDelegate: UIResponder, UIApplicationDelegate {
     static var shared: AppDelegate {
@@ -14,7 +15,7 @@ import SwiftData
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Diag -- log home folder
         let fileManager = FileManager.default
-        NSLog("$HOME = \(fileManager.urls(for: .documentDirectory, in: .userDomainMask).first?.description ?? "--")")
+        log.info("$HOME = \(fileManager.urls(for: .documentDirectory, in: .userDomainMask).first?.description ?? "--")")
         
         // Setup db, load game state
         do {
@@ -29,7 +30,7 @@ import SwiftData
                 gameState = initial
             }
         } catch {
-            NSLog("Fatal error in db init :: \(error.localizedDescription)")
+            log.error("Fatal error in db init :: \(error.localizedDescription)")
             abort()
         }
         return true
