@@ -12,7 +12,7 @@ import SwiftData
     var fives: Int?
     var sixes: Int?
     var subtotal: Int?
-    var bonus: Int?
+    var upperBonus: Int?
     var threeOfAKind: Int?
     var fourOfAKind: Int?
     var fullHouse: Int?
@@ -20,19 +20,22 @@ import SwiftData
     var largeStraight: Int?
     var chance: Int?
     var yahtzee: Int?
+    var lowerBonus: Int?
     var total: Int?
     var rolls: [Int]
     var holds: [Bool]
     var step: Int
     
+    
     init() {
         rolls = [0,0,0,0,0]
         holds = [false, false, false, false, false]
         step = 0
+        lowerBonus = 0
     }
 }
 
-typealias ScoreBox = KeyPath<Game, Int?>
+typealias ScoreBox = WritableKeyPath<Game, Int?>
 
 private func count(dice: [Int]) -> [Int] {
     var counts = [0, 0, 0, 0, 0, 0, 0]
@@ -40,45 +43,6 @@ private func count(dice: [Int]) -> [Int] {
         counts[dice[i]] += 1
     }
     return counts
-}
-
-func value(rolls: [Int], box: ScoreBox) -> Int {
-    switch box {
-    case \.ones:
-        return rolls.reduce(0, { $0 + ($1 == 1 ? $1 : 0) })
-    case \.twos:
-        return rolls.reduce(0, { $0 + ($1 == 2 ? $1 : 0) })
-    case \.threes:
-        return rolls.reduce(0, { $0 + ($1 == 3 ? $1 : 0) })
-    case \.fours:
-        return rolls.reduce(0, { $0 + ($1 == 4 ? $1 : 0) })
-    case \.fives:
-        return rolls.reduce(0, { $0 + ($1 == 5 ? $1 : 0) })
-    case \.sixes:
-        return rolls.reduce(0, { $0 + ($1 == 6 ? $1 : 0) })
-    case \.threeOfAKind:
-        let counts = count(dice: rolls)
-        return counts.max()! >= 3 ? rolls.reduce(0, +) : 0
-    case \.fourOfAKind:
-        let counts = count(dice: rolls)
-        return counts.max()! >= 4 ? rolls.reduce(0, +) : 0
-    case \.smallStraight:
-        let mask = rolls.reduce(0, { $0 | 1 << $1 })
-        return mask & 30 == 30 || mask & 60 == 60 || mask & 120 == 120 ? 30 : 0
-    case \.largeStraight:
-        let mask = rolls.reduce(0, { $0 | 1 << $1 })
-        return mask & 62 == 62 || mask & 124 == 124 ? 40 : 0
-    case \.fullHouse:
-        let counts = count(dice: rolls)
-        return counts.contains(3) && counts.contains(2) ? 25 : 0
-    case \.chance:
-        return rolls.reduce(0, +)
-    case \.yahtzee:
-        let counts = count(dice: rolls)
-        return counts.contains(5) ? 50 : 0
-    default:
-        return 0
-    }
 }
 
 func addUp(_ scores: Int?...) -> Int {
@@ -91,7 +55,7 @@ extension Game {
     }
     
     var isRollEnabled: Bool {
-        return step < 3 && !isGameComplete()
+        return !isGameComplete()
     }
     
     func isGameComplete() -> Bool {
@@ -127,45 +91,57 @@ extension Game {
         holds[index] = !holds[index]
     }
     
-    func score(box: ScoreBox) {
-        let value = value(rolls: rolls, box: box)
-        switch box {
-        case \.ones:
-            ones = value
-        case \.twos:
-            twos = value
-        case \.threes:
-            threes = value
-        case \.fours:
-            fours = value
-        case \.fives:
-            fives = value
-        case \.sixes:
-            sixes = value
-        case \.bonus:
-            bonus = value
-        case \.threeOfAKind:
-            threeOfAKind = value
-        case \.fourOfAKind:
-            fourOfAKind = value
-        case \.fullHouse:
-            fullHouse = value
-        case \.smallStraight:
-            smallStraight = value
-        case \.largeStraight:
-            largeStraight = value
-        case \.chance:
-            chance = value
-        case \.yahtzee:
-            yahtzee = value
-        default:
-            break
+    func score(box: ScoreBox, dryRun: Bool) -> Int {
+        let counts = count(dice: rolls)
+        let isYahtzee = counts.contains(5)
+        let isJoker = isYahtzee && yahtzee != nil
+        let calculate: ([Int]) -> Int = { rolls in
+            switch box {
+            case \.ones:
+                return rolls.reduce(0, { $0 + ($1 == 1 ? $1 : 0) })
+            case \.twos:
+                return rolls.reduce(0, { $0 + ($1 == 2 ? $1 : 0) })
+            case \.threes:
+                return rolls.reduce(0, { $0 + ($1 == 3 ? $1 : 0) })
+            case \.fours:
+                return rolls.reduce(0, { $0 + ($1 == 4 ? $1 : 0) })
+            case \.fives:
+                return rolls.reduce(0, { $0 + ($1 == 5 ? $1 : 0) })
+            case \.sixes:
+                return rolls.reduce(0, { $0 + ($1 == 6 ? $1 : 0) })
+            case \.threeOfAKind:
+                return isJoker || counts.max()! >= 3 ? rolls.reduce(0, +) : 0
+            case \.fourOfAKind:
+                return isJoker || counts.max()! >= 4 ? rolls.reduce(0, +) : 0
+            case \.smallStraight:
+                let mask = rolls.reduce(0, { $0 | 1 << $1 })
+                return isJoker || mask & 30 == 30 || mask & 60 == 60 || mask & 120 == 120 ? 30 : 0
+            case \.largeStraight:
+                let mask = rolls.reduce(0, { $0 | 1 << $1 })
+                return isJoker || mask & 62 == 62 || mask & 124 == 124 ? 40 : 0
+            case \.fullHouse:
+                return isJoker || counts.contains(3) && counts.contains(2) ? 25 : 0
+            case \.chance:
+                return rolls.reduce(0, +)
+            case \.yahtzee:
+                return isYahtzee ? 50 : 0
+            default:
+                return 0
+            }
         }
-        subtotal = addUp(ones, twos, threes, fours, fives, sixes)
-        bonus = subtotal! > 63 ? 35 : 0
-        total = addUp(subtotal, bonus, threeOfAKind, fourOfAKind, fullHouse, smallStraight, largeStraight, chance, yahtzee, 0)
-        holds = [false, false, false, false, false]
-        step = 0
+        let value = calculate(rolls)
+        if !dryRun {
+            setValue(for: box, to: value)
+            subtotal = addUp(ones, twos, threes, fours, fives, sixes)
+            upperBonus = subtotal! > 63 ? 35 : 0
+            if isJoker && yahtzee == 50 {
+                lowerBonus = (lowerBonus ?? 0) + 100
+            }
+            total = addUp(subtotal, upperBonus, threeOfAKind, fourOfAKind, fullHouse, smallStraight, largeStraight, chance, yahtzee, lowerBonus)
+            holds = [false, false, false, false, false]
+            step = 0
+        }
+        return value
     }
 }
 

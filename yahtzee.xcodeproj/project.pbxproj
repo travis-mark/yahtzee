@@ -70,6 +70,7 @@
 			isa = PBXGroup;
 			children = (
 				1F7DAA432A3D491C005051CB /* AppDelegate.swift */,
+				1F7C5FB62A4A758400790E51 /* Logger.swift */,
 				1F4E5CA52A44F3050077FCFA /* Model.swift */,
 				1F7DAA452A3D491C005051CB /* SceneDelegate.swift */,
 				1F7DAA472A3D491C005051CB /* GameViewController.swift */,
@@ -81,7 +82,6 @@
 				1F7DAA512A3D491D005051CB /* LaunchScreen.storyboard */,
 				1F7DAA542A3D491D005051CB /* yahtzee.entitlements */,
 				1F7DAA552A3D491D005051CB /* Info.plist */,
-				1F7C5FB62A4A758400790E51 /* Logger.swift */,
 			);
 			path = yahtzee;
 			sourceTree = "<group>";
