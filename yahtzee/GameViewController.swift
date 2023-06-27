@@ -100,7 +100,7 @@ class GameViewController: UIViewController {
             context.insert(object: highScore)
             gameState.highScores.append(highScore)
             gameState.currentGame = nil
-            context.delete(object: game)
+//            context.delete(object: game)
             try! gameState.context!.save()
         } else {
             render()
@@ -124,6 +124,7 @@ class GameViewController: UIViewController {
         if sender === largeStraightButton { return \.largeStraight }
         if sender === chanceButton { return \.chance }
         if sender === yahtzeeButton { return \.yahtzee }
+        if sender === totalButton { return \.total}
         return nil
     }
     
