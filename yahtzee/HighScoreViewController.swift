@@ -4,7 +4,7 @@
 import UIKit
 
 class HighScoreViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    var topGames: [ScoreSheet] = [] { didSet {
+    var topGames: [HighScore] = [] { didSet {
         guard isViewLoaded else { return }
         tableView.reloadData()
     }}
@@ -26,7 +26,7 @@ class HighScoreViewController: UIViewController, UITableViewDataSource, UITableV
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GameScoreCell", for: indexPath)
-        cell.textLabel?.text = "\(topGames[indexPath.row].scores[ScoreBoxes.total.rawValue] ?? 0)"
+        cell.textLabel?.text = "\(topGames[indexPath.row].total)"
         return cell
     }
 }

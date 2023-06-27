@@ -45,28 +45,11 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         die1HoldButton.tag = 0
         die2HoldButton.tag = 1
         die3HoldButton.tag = 2
         die4HoldButton.tag = 3
         die5HoldButton.tag = 4
-        onesButton.tag = ScoreBoxes.ones.rawValue
-        twosButton.tag = ScoreBoxes.twos.rawValue
-        threesButton.tag = ScoreBoxes.threes.rawValue
-        foursButton.tag = ScoreBoxes.fours.rawValue
-        fivesButton.tag = ScoreBoxes.fives.rawValue
-        sixesButton.tag = ScoreBoxes.sixes.rawValue
-        bonusButton.tag = ScoreBoxes.bonus.rawValue
-        threeOfAKindButton.tag = ScoreBoxes.threeOfAKind.rawValue
-        fourOfAKindButton.tag = ScoreBoxes.fourOfAKind.rawValue
-        fullHouseButton.tag = ScoreBoxes.fullHouse.rawValue
-        smallStraightButton.tag = ScoreBoxes.smallStraight.rawValue
-        largeStraightButton.tag = ScoreBoxes.largeStraight.rawValue
-        chanceButton.tag = ScoreBoxes.chance.rawValue
-        yahtzeeButton.tag = ScoreBoxes.yahtzee.rawValue
-        totalButton.tag = ScoreBoxes.total.rawValue
-        
         roundDidEnd()
     }
     
@@ -101,7 +84,7 @@ class GameViewController: UIViewController {
     }
     
     @IBAction func scoreButtonDidPress(_ sender: UIButton) {
-        let box = ScoreBoxes(rawValue: sender.tag)
+        let box = keyPath(for: sender)
         assert(box != nil, "Invalid button press -- no scoring rules")
         assert(game.isRoundStarted, "Must roll at least once to score")
         game.score(box: box!)
@@ -110,23 +93,48 @@ class GameViewController: UIViewController {
     
     
     func roundDidEnd() {
-        if game.sheet.isGameComplete() {
+        if game.isGameComplete() {
+            let highScore = HighScore(total: game.total!)
             let gameState = AppDelegate.shared.gameState!
             let context = gameState.context!
-            gameState.highScores.append(game.sheet)
+            context.insert(object: highScore)
+            gameState.highScores.append(highScore)
             gameState.currentGame = nil
             context.delete(object: game)
             try! gameState.context!.save()
+        } else {
+            render()
         }
-        render()
+        
+    }
+    
+    func keyPath(for sender: UIButton) -> KeyPath<Game, Int?>? {
+        if sender === onesButton { return \.ones }
+        if sender === twosButton { return \.twos }
+        if sender === threesButton { return \.threes }
+        if sender === foursButton { return \.fours }
+        if sender === fivesButton { return \.fives }
+        if sender === sixesButton { return \.sixes }
+//        if sender === bonus { return \.ones }
+        if sender === bonusButton { return \.bonus }
+        if sender === threeOfAKindButton { return \.threeOfAKind }
+        if sender === fourOfAKindButton { return \.fourOfAKind }
+        if sender === fullHouseButton { return \.fullHouse }
+        if sender === smallStraightButton { return \.smallStraight }
+        if sender === largeStraightButton { return \.largeStraight }
+        if sender === chanceButton { return \.chance }
+        if sender === yahtzeeButton { return \.yahtzee }
+        return nil
     }
     
     func render(_ view: UIView? = nil) {
         for button in [onesButton, twosButton, threesButton, foursButton, fivesButton, sixesButton, bonusButton,
                     threeOfAKindButton, fourOfAKindButton, fullHouseButton, smallStraightButton, largeStraightButton, chanceButton, yahtzeeButton, totalButton] {
-            guard let button = button, let box = ScoreBoxes(rawValue: button.tag) else { continue }
-            button.setTitle("\(game.sheet.scores[button.tag] ?? game.sheet.value(rolls: game.rolls, box: box))", for: .normal)
-            button.isEnabled = game.isRoundStarted && game.sheet.scores[button.tag] == nil
+            guard let button = button else { continue }
+            guard let box = keyPath(for: button) else { continue }
+            guard let game = game else { continue }
+            button.setTitle("\(game[keyPath: box] ?? game.value(rolls: game.rolls, box: box))", for: .normal)
+            button.isEnabled = game.isRoundStarted && game[keyPath: box] == nil
         }
         bonusButton.isEnabled = false
         totalButton.isEnabled = false
