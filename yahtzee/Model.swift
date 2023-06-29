@@ -40,7 +40,10 @@ typealias ScoreBox = WritableKeyPath<Game, Int?>
 private func count(dice: [Int]) -> [Int] {
     var counts = [0, 0, 0, 0, 0, 0, 0]
     for i in 0 ..< dice.count {
-        counts[dice[i]] += 1
+        let value = dice[i]
+        if value != 0 {
+            counts[value] += 1
+        }
     }
     return counts
 }
@@ -55,7 +58,7 @@ extension Game {
     }
     
     var isRollEnabled: Bool {
-        return !isGameComplete()
+        return step < 3 && !isGameComplete()
     }
     
     func isGameComplete() -> Bool {
