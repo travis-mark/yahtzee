@@ -26,7 +26,6 @@ import SwiftData
     var holds: [Bool]
     var step: Int
     
-    
     init() {
         rolls = [0,0,0,0,0]
         holds = [false, false, false, false, false]
@@ -156,35 +155,36 @@ extension Game {
     }
 }
 
-@Model class GameState {
-    var currentGame: Game?
-    var highScores: [HighScore]
-    
-    init() {
-        currentGame = nil
-        highScores = []
+@MainActor func startNewGame() -> Game {
+    let context = AppDelegate.shared.container.mainContext
+    do {
+        // Delete previous game if found
+        let descriptor = FetchDescriptor<Game>()
+        let oldGames = try context.fetch(descriptor) // Should only be 1
+        for oldGame in oldGames {
+            context.delete(oldGame)
+        }
+        // Save new game to database
+        let newGame = Game()
+        context.insert(newGame)
+        try context.save()
+        return newGame
+    } catch {
+        log.error("Save new Game failed :: \(error.localizedDescription, privacy: .public)")
+        abort()
     }
 }
 
-@MainActor func startNewGame() -> Game {
-    let oldGame = AppDelegate.shared.gameState.currentGame
-    let oldGameContext = oldGame?.context
-    let newGame = Game()
-    let newGameContext = AppDelegate.shared.gameState.context
-    // Delete previous game if found
-    if let oldGame = oldGame, let oldGameContext = oldGameContext {
-        assert(oldGameContext == newGameContext)
-        oldGameContext.delete(object: oldGame)
-    }
-    // Save new game to database if in not inside a test
-    if let newGameContext = newGameContext {
-        do {
-            newGameContext.insert(newGame)
-            try newGameContext.save()
-        } catch {
-            log.error("Save new Game failed :: \(error.localizedDescription, privacy: .public)")
-        }
-    }
-    AppDelegate.shared.gameState.currentGame = newGame
-    return newGame
+@MainActor func fetchCurrentGame() -> Game? {
+    let context = AppDelegate.shared.container.mainContext
+    let descriptor = FetchDescriptor<Game>()
+    return try? context.fetch(descriptor).first
+}
+
+@MainActor func fetchHighScores(_ limit: Int? = 5) -> [HighScore] {
+    let context = AppDelegate.shared.container.mainContext
+    var descriptor = FetchDescriptor<HighScore>()
+    descriptor.fetchLimit = 5
+    descriptor.sortBy = [SortDescriptor(\.total, order: .reverse)]
+    return (try? context.fetch(descriptor)) ?? []
 }

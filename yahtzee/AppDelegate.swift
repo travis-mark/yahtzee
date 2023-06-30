@@ -9,25 +9,16 @@ import SwiftData
         return UIApplication.shared.delegate as! AppDelegate
     }
     
-    var gameState: GameState!
+    var container: ModelContainer!
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Diag -- log home folder
         let fileManager = FileManager.default
         log.info("$HOME = \(fileManager.urls(for: .documentDirectory, in: .userDomainMask).first?.description ?? "--")")
         
-        // Setup db, load game state
+        // Setup db
         do {
-            let container = try ModelContainer(for: GameState.self)
-            let descriptor = FetchDescriptor<GameState>()
-            let context = container.mainContext
-            if let saved = try context.fetch(descriptor).first {
-                gameState = saved
-            } else {
-                let initial = GameState()
-                context.insert(initial)
-                gameState = initial
-            }
+            container = try ModelContainer(for: [Game.self, HighScore.self])
         } catch {
             log.error("Fatal error in db init :: \(error.localizedDescription)")
             abort()

@@ -13,7 +13,7 @@ class TitleScreenViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        currentGame = AppDelegate.shared.gameState.currentGame
+        currentGame = fetchCurrentGame()
     }
     
     @IBAction func newGameDidPress(_ sender: Any) {
@@ -29,19 +29,13 @@ class TitleScreenViewController: UIViewController {
         performSegue(withIdentifier: "highScores", sender: nil)
     }
     
-    @IBAction func optionsDidPress(_ sender: Any) {
-        performSegue(withIdentifier: "options", sender: nil)
-    }
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "startGame", let vc = segue.destination as? GameViewController {
             vc.game = currentGame
         }
         
         if segue.identifier == "highScores", let vc = segue.destination as? HighScoreViewController {
-            // TODO: Sort and take top 5
-            vc.topGames = AppDelegate.shared.gameState.highScores
+            vc.topGames = fetchHighScores()
         }
-        
     }
 }

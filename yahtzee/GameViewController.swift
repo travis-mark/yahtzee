@@ -91,22 +91,18 @@ class GameViewController: UIViewController {
         assert(box != nil, "Invalid button press -- no scoring rules")
         assert(game.isRoundStarted, "Must roll at least once to score")
         let _ = game.score(box: box!, dryRun: false)
-        sender.isEnabled = false
         roundDidEnd()
     }
     
     func roundDidEnd() {
+        render()
+        
         if game.isGameComplete() {
             let highScore = HighScore(total: game.total!)
-            let gameState = AppDelegate.shared.gameState!
-            let context = gameState.context!
+            let context = game.context!
             context.insert(object: highScore)
-            gameState.highScores.append(highScore)
-            gameState.currentGame = nil
             context.delete(object: game)
-            try! gameState.context!.save()
-        } else {
-            render()
+            try! context.save()
         }
     }
     
