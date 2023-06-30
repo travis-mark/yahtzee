@@ -33,15 +33,18 @@ class GameViewController: UIViewController {
     @IBOutlet weak var yahtzeeButton: UIButton!
     @IBOutlet weak var totalButton: UIButton!
     
-    let dice = [
-        UIImage(systemName: "square.fill")!,
-        UIImage(systemName: "die.face.1.fill")!,
-        UIImage(systemName: "die.face.2.fill")!,
-        UIImage(systemName: "die.face.3.fill")!,
-        UIImage(systemName: "die.face.4.fill")!,
-        UIImage(systemName: "die.face.5.fill")!,
-        UIImage(systemName: "die.face.6.fill")!
-    ]
+    let dice: [UIImage] = {
+        let configuration = UIImage.SymbolConfiguration(paletteColors: [.white, .accent])
+        return [
+            UIImage(systemName: "square.fill")!,
+            UIImage(systemName: "die.face.1.fill", withConfiguration: configuration)!,
+            UIImage(systemName: "die.face.2.fill", withConfiguration: configuration)!,
+            UIImage(systemName: "die.face.3.fill", withConfiguration: configuration)!,
+            UIImage(systemName: "die.face.4.fill", withConfiguration: configuration)!,
+            UIImage(systemName: "die.face.5.fill", withConfiguration: configuration)!,
+            UIImage(systemName: "die.face.6.fill", withConfiguration: configuration)!
+        ]
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -92,7 +95,6 @@ class GameViewController: UIViewController {
         roundDidEnd()
     }
     
-    
     func roundDidEnd() {
         if game.isGameComplete() {
             let highScore = HighScore(total: game.total!)
@@ -106,7 +108,6 @@ class GameViewController: UIViewController {
         } else {
             render()
         }
-        
     }
     
     func keyPath(for sender: UIButton) -> ScoreBox? {
@@ -140,11 +141,11 @@ class GameViewController: UIViewController {
         }
         bonusButton.isEnabled = false
         totalButton.isEnabled = false
-        die1HoldButton.tintColor = game.holds[0] ? UIColor.systemBlue : UIColor.systemGray
-        die2HoldButton.tintColor = game.holds[1] ? UIColor.systemBlue : UIColor.systemGray
-        die3HoldButton.tintColor = game.holds[2] ? UIColor.systemBlue : UIColor.systemGray
-        die4HoldButton.tintColor = game.holds[3] ? UIColor.systemBlue : UIColor.systemGray
-        die5HoldButton.tintColor = game.holds[4] ? UIColor.systemBlue : UIColor.systemGray
+        die1HoldButton.tintColor = game.holds[0] ? .accent : .darkGray
+        die2HoldButton.tintColor = game.holds[1] ? .accent : .darkGray
+        die3HoldButton.tintColor = game.holds[2] ? .accent : .darkGray
+        die4HoldButton.tintColor = game.holds[3] ? .accent : .darkGray
+        die5HoldButton.tintColor = game.holds[4] ? .accent : .darkGray
         die1ImageView.setSymbolImage(dice[game.rolls[0]], contentTransition: .replace.offUp)
         die2ImageView.setSymbolImage(dice[game.rolls[1]], contentTransition: .replace.offUp)
         die3ImageView.setSymbolImage(dice[game.rolls[2]], contentTransition: .replace.offUp)
@@ -152,7 +153,7 @@ class GameViewController: UIViewController {
         die5ImageView.setSymbolImage(dice[game.rolls[4]], contentTransition: .replace.offUp)
         rollDiceButton.isUserInteractionEnabled = game.isRollEnabled
         rollDiceButton.setTitle(game.step != 0 ? "Roll (\(game.step) of 3)" : "Roll", for: .normal)
-        rollDiceButton.tintColor = game.isRollEnabled ? UIColor.systemBlue : UIColor.systemGray
+        rollDiceButton.tintColor = game.isRollEnabled ? .accent : .darkGray
     }
 }
 

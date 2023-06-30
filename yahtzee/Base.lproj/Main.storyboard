@@ -3,6 +3,7 @@
     <device id="retina4_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22089"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -17,10 +18,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fq0-u7-0SJ">
-                                <rect key="frame" x="76" y="263.5" width="168" height="41"/>
+                                <rect key="frame" x="90" y="263.5" width="140" height="41"/>
+                                <color key="tintColor" name="AccentColor"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" image="dice.fill" catalog="system" title="New Game">
-                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage"/>
+                                <buttonConfiguration key="configuration" style="filled" title="New Game">
                                     <fontDescription key="titleFontDescription" style="UICTFontTextStyleTitle2"/>
                                 </buttonConfiguration>
                                 <connections>
@@ -28,10 +29,10 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CoK-10-hTG">
-                                <rect key="frame" x="76" y="324.5" width="168" height="41"/>
+                                <rect key="frame" x="90" y="324.5" width="140" height="41"/>
+                                <color key="tintColor" name="AccentColor"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" image="dice.fill" catalog="system" title="Continue">
-                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Continue">
                                     <fontDescription key="titleFontDescription" style="UICTFontTextStyleTitle2"/>
                                 </buttonConfiguration>
                                 <connections>
@@ -39,42 +40,28 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="R38-EV-guG">
-                                <rect key="frame" x="76" y="385.5" width="168" height="41"/>
+                                <rect key="frame" x="90" y="385.5" width="140" height="41"/>
+                                <color key="tintColor" name="AccentColor"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" image="dice.fill" catalog="system" title="High Scores">
-                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage"/>
+                                <buttonConfiguration key="configuration" style="filled" title="High Scores">
                                     <fontDescription key="titleFontDescription" style="UICTFontTextStyleTitle2"/>
                                 </buttonConfiguration>
                                 <connections>
                                     <action selector="highScoresDidPress:" destination="jwZ-zL-YyT" eventType="touchUpInside" id="2zB-lA-h9U"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HcX-Ry-v7c">
-                                <rect key="frame" x="76" y="446.5" width="168" height="41"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" image="dice.fill" catalog="system" title="Options">
-                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage"/>
-                                    <fontDescription key="titleFontDescription" style="UICTFontTextStyleTitle2"/>
-                                </buttonConfiguration>
-                                <connections>
-                                    <action selector="optionsDidPress:" destination="jwZ-zL-YyT" eventType="touchUpInside" id="xWj-JX-Atk"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="MaM-VM-rqD"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="BackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Fq0-u7-0SJ" firstAttribute="centerX" secondItem="N8s-GC-Cwr" secondAttribute="centerX" id="1gm-gT-6ao"/>
                             <constraint firstItem="R38-EV-guG" firstAttribute="leading" secondItem="CoK-10-hTG" secondAttribute="leading" id="F0H-Yv-V6t"/>
                             <constraint firstItem="CoK-10-hTG" firstAttribute="top" secondItem="Fq0-u7-0SJ" secondAttribute="bottom" constant="20" id="Fu7-X5-lNH"/>
-                            <constraint firstItem="HcX-Ry-v7c" firstAttribute="leading" secondItem="R38-EV-guG" secondAttribute="leading" id="Kvm-eU-mas"/>
                             <constraint firstItem="Fq0-u7-0SJ" firstAttribute="centerY" secondItem="N8s-GC-Cwr" secondAttribute="centerY" id="PXj-Mb-BSl"/>
                             <constraint firstItem="CoK-10-hTG" firstAttribute="trailing" secondItem="Fq0-u7-0SJ" secondAttribute="trailing" id="U5v-lk-JRl"/>
                             <constraint firstItem="CoK-10-hTG" firstAttribute="leading" secondItem="Fq0-u7-0SJ" secondAttribute="leading" id="Y6k-Ki-TSD"/>
-                            <constraint firstItem="HcX-Ry-v7c" firstAttribute="top" secondItem="R38-EV-guG" secondAttribute="bottom" constant="20" id="cH9-II-Ef8"/>
                             <constraint firstItem="R38-EV-guG" firstAttribute="trailing" secondItem="CoK-10-hTG" secondAttribute="trailing" id="o62-rH-nyh"/>
                             <constraint firstItem="R38-EV-guG" firstAttribute="top" secondItem="CoK-10-hTG" secondAttribute="bottom" constant="20" id="q2Q-eV-2RK"/>
-                            <constraint firstItem="HcX-Ry-v7c" firstAttribute="trailing" secondItem="R38-EV-guG" secondAttribute="trailing" id="zrj-zk-qD7"/>
                         </constraints>
                     </view>
                     <connections>
@@ -82,7 +69,6 @@
                         <outlet property="newGameButton" destination="Fq0-u7-0SJ" id="2cz-Ds-IZS"/>
                         <segue destination="BYZ-38-t0r" kind="presentation" identifier="startGame" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="9Xg-TG-uKa"/>
                         <segue destination="pFz-EO-6HC" kind="presentation" identifier="highScores" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="SKB-OL-i8T"/>
-                        <segue destination="Pmb-5q-EKx" kind="presentation" identifier="options" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="PiQ-hI-K26"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sie-wU-3Hn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -99,6 +85,7 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mmR-Pk-MBs">
                                 <rect key="frame" x="20" y="507" width="130" height="41"/>
+                                <color key="tintColor" name="AccentColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Roll">
                                     <fontDescription key="titleFontDescription" style="UICTFontTextStyleTitle2"/>
@@ -200,7 +187,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1s" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X38-eb-oLR">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Aces" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X38-eb-oLR">
                                 <rect key="frame" x="8" y="7" width="85" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -208,6 +195,7 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9XM-2E-s4k">
                                 <rect key="frame" x="101" y="0.0" width="55" height="35"/>
+                                <color key="tintColor" name="AccentColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="000"/>
                                 <connections>
@@ -222,13 +210,14 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b5E-xW-lcQ">
                                 <rect key="frame" x="257" y="0.0" width="55" height="35"/>
+                                <color key="tintColor" name="AccentColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="000"/>
                                 <connections>
                                     <action selector="scoreButtonDidPress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5oL-4z-MIA"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2s" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OEB-MX-YgH">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Twos" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OEB-MX-YgH">
                                 <rect key="frame" x="8" y="50" width="85" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -236,6 +225,7 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SqE-Po-51h">
                                 <rect key="frame" x="101" y="43" width="55" height="35"/>
+                                <color key="tintColor" name="AccentColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="000"/>
                                 <connections>
@@ -250,13 +240,14 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KkR-pz-878">
                                 <rect key="frame" x="257" y="43" width="55" height="35"/>
+                                <color key="tintColor" name="AccentColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="000"/>
                                 <connections>
                                     <action selector="scoreButtonDidPress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MRL-QE-Ove"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3s" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ccB-B5-Uir">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Threes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ccB-B5-Uir">
                                 <rect key="frame" x="8" y="93" width="85" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -264,6 +255,7 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1R2-rA-IGa">
                                 <rect key="frame" x="101" y="86" width="55" height="35"/>
+                                <color key="tintColor" name="AccentColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="000"/>
                                 <connections>
@@ -278,13 +270,14 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hdz-tv-Ppf">
                                 <rect key="frame" x="257" y="86" width="55" height="35"/>
+                                <color key="tintColor" name="AccentColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="000"/>
                                 <connections>
                                     <action selector="scoreButtonDidPress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="F6F-Dw-T4k"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4s" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BUg-zz-PiH">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fours" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BUg-zz-PiH">
                                 <rect key="frame" x="8" y="136" width="85" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -292,6 +285,7 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PxM-nH-LS6">
                                 <rect key="frame" x="101" y="129" width="55" height="35"/>
+                                <color key="tintColor" name="AccentColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="000"/>
                                 <connections>
@@ -306,13 +300,14 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dxZ-mp-19o">
                                 <rect key="frame" x="257" y="129" width="55" height="35"/>
+                                <color key="tintColor" name="AccentColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="000"/>
                                 <connections>
                                     <action selector="scoreButtonDidPress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Pxs-Lw-weA"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5s" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fi8-fy-YNU">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fives" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fi8-fy-YNU">
                                 <rect key="frame" x="8" y="179" width="85" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -320,6 +315,7 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y3G-rl-1w5">
                                 <rect key="frame" x="101" y="172" width="55" height="35"/>
+                                <color key="tintColor" name="AccentColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="000"/>
                                 <connections>
@@ -334,13 +330,14 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3c7-al-qXR">
                                 <rect key="frame" x="257" y="172" width="55" height="35"/>
+                                <color key="tintColor" name="AccentColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="000"/>
                                 <connections>
                                     <action selector="scoreButtonDidPress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="V2l-j5-ajM"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="6s" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sfJ-iZ-Mae">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sixes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sfJ-iZ-Mae">
                                 <rect key="frame" x="8" y="222" width="85" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -348,6 +345,7 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pHN-MJ-MGY">
                                 <rect key="frame" x="101" y="215" width="55" height="35"/>
+                                <color key="tintColor" name="AccentColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="000"/>
                                 <connections>
@@ -362,6 +360,7 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p2Y-xz-PoE">
                                 <rect key="frame" x="257" y="215" width="55" height="35"/>
+                                <color key="tintColor" name="AccentColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="000"/>
                                 <connections>
@@ -376,6 +375,7 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="U93-ul-xCr">
                                 <rect key="frame" x="101" y="258" width="55" height="35"/>
+                                <color key="tintColor" name="AccentColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="000"/>
                                 <connections>
@@ -390,6 +390,7 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZW1-ez-yyw">
                                 <rect key="frame" x="257" y="258" width="55" height="35"/>
+                                <color key="tintColor" name="AccentColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="000"/>
                                 <connections>
@@ -404,6 +405,7 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="64R-dL-BEm">
                                 <rect key="frame" x="257" y="301" width="55" height="35"/>
+                                <color key="tintColor" name="AccentColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="000"/>
                                 <connections>
@@ -412,6 +414,7 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q31-Ym-pho">
                                 <rect key="frame" x="170" y="507" width="130" height="41"/>
+                                <color key="tintColor" name="AccentColor"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Quit">
                                     <fontDescription key="titleFontDescription" style="UICTFontTextStyleTitle2"/>
@@ -422,7 +425,7 @@
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="BackgroundColor"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="SqE-Po-51h" firstAttribute="top" secondItem="KkR-pz-878" secondAttribute="top" id="08C-vL-XHr"/>
@@ -614,47 +617,6 @@
             </objects>
             <point key="canvasLocation" x="41.25" y="3.1690140845070425"/>
         </scene>
-        <!--Options View Controller-->
-        <scene sceneID="K4W-ny-4jt">
-            <objects>
-                <viewController id="Pmb-5q-EKx" customClass="OptionsViewController" customModule="yahtzee" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8Qo-Ka-KGq">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lol-N2-w41">
-                                <rect key="frame" x="260" y="0.0" width="60" height="60"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="60" id="X1Z-g3-OVj"/>
-                                    <constraint firstAttribute="height" constant="60" id="a2o-4B-4fw"/>
-                                </constraints>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" image="xmark.circle" catalog="system"/>
-                                <connections>
-                                    <action selector="closeDidPress:" destination="Pmb-5q-EKx" eventType="touchUpInside" id="tyG-ha-B7a"/>
-                                </connections>
-                            </button>
-                            <colorWell contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="bcT-DE-4Ba">
-                                <rect key="frame" x="20" y="68" width="28" height="28"/>
-                            </colorWell>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="Byd-7p-oMM"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="Lol-N2-w41" firstAttribute="trailing" secondItem="Byd-7p-oMM" secondAttribute="trailing" id="Cji-de-Q2Y"/>
-                            <constraint firstItem="Lol-N2-w41" firstAttribute="top" secondItem="Byd-7p-oMM" secondAttribute="top" id="S5H-fb-hw0"/>
-                            <constraint firstItem="bcT-DE-4Ba" firstAttribute="leading" secondItem="Byd-7p-oMM" secondAttribute="leading" constant="20" id="V0e-J3-aYM"/>
-                            <constraint firstItem="bcT-DE-4Ba" firstAttribute="top" secondItem="Lol-N2-w41" secondAttribute="bottom" constant="8" id="nC8-BX-10Z"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="backgroundColorWell" destination="bcT-DE-4Ba" id="21Y-dw-58q"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="jxc-Bz-p3T" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-819" y="803"/>
-        </scene>
         <!--High Score View Controller-->
         <scene sceneID="2sn-LX-oYd">
             <objects>
@@ -665,7 +627,7 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="11f-gK-KyG">
                                 <rect key="frame" x="0.0" y="60" width="320" height="448"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <color key="backgroundColor" name="BackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="GameScoreCell" textLabel="1yR-mU-LZe" detailTextLabel="w94-cn-snH" style="IBUITableViewCellStyleValue1" id="WYJ-Uh-DMM">
                                         <rect key="frame" x="0.0" y="50" width="320" height="43.5"/>
@@ -675,21 +637,22 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1yR-mU-LZe">
-                                                    <rect key="frame" x="16" y="15" width="25" height="14.5"/>
+                                                    <rect key="frame" x="16" y="10" width="38" height="24"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="w94-cn-snH">
-                                                    <rect key="frame" x="271" y="15" width="33" height="14.5"/>
+                                                    <rect key="frame" x="253.5" y="10" width="50.5" height="24"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
+                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" name="BackgroundColor"/>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -711,7 +674,7 @@
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="eau-53-N21"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="BackgroundColor"/>
                         <constraints>
                             <constraint firstItem="11f-gK-KyG" firstAttribute="top" secondItem="eau-53-N21" secondAttribute="top" constant="60" id="1cx-b3-h8K"/>
                             <constraint firstItem="11f-gK-KyG" firstAttribute="leading" secondItem="eau-53-N21" secondAttribute="leading" id="BP7-5e-aTX"/>
@@ -731,16 +694,18 @@
         </scene>
     </scenes>
     <resources>
-        <image name="dice.fill" catalog="system" width="128" height="120"/>
         <image name="die.face.1.fill" catalog="system" width="128" height="114"/>
         <image name="die.face.2.fill" catalog="system" width="128" height="114"/>
         <image name="die.face.3.fill" catalog="system" width="128" height="114"/>
         <image name="die.face.4.fill" catalog="system" width="128" height="114"/>
         <image name="die.face.5.fill" catalog="system" width="128" height="114"/>
         <image name="xmark.circle" catalog="system" width="128" height="123"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
+        <namedColor name="AccentColor">
+            <color red="0.70980392156862748" green="0.090196078431372548" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="BackgroundColor">
+            <color red="0.99607843137254903" green="0.77647058823529413" blue="0.0039215686274509803" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemGrayColor">
             <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

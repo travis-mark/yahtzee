@@ -3,7 +3,6 @@
 
 import UIKit
 import SwiftData
-import os
 
 @main class AppDelegate: UIResponder, UIApplicationDelegate {
     static var shared: AppDelegate {

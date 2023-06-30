@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1F1F226A2A468C3700EA604D /* HighScoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1F22692A468C3700EA604D /* HighScoreViewController.swift */; };
-		1F1F226C2A47DCC200EA604D /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1F226B2A47DCC200EA604D /* OptionsViewController.swift */; };
 		1F4E5CA62A44F3050077FCFA /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4E5CA52A44F3050077FCFA /* Model.swift */; };
 		1F4E5CA82A450BFC0077FCFA /* TitleScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4E5CA72A450BFC0077FCFA /* TitleScreenViewController.swift */; };
 		1F7C5FB72A4A758400790E51 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F7C5FB62A4A758400790E51 /* Logger.swift */; };
@@ -22,7 +21,6 @@
 
 /* Begin PBXFileReference section */
 		1F1F22692A468C3700EA604D /* HighScoreViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighScoreViewController.swift; sourceTree = "<group>"; };
-		1F1F226B2A47DCC200EA604D /* OptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsViewController.swift; sourceTree = "<group>"; };
 		1F4E5CA52A44F3050077FCFA /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		1F4E5CA72A450BFC0077FCFA /* TitleScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleScreenViewController.swift; sourceTree = "<group>"; };
 		1F7C5FB62A4A758400790E51 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -75,7 +73,6 @@
 				1F7DAA452A3D491C005051CB /* SceneDelegate.swift */,
 				1F7DAA472A3D491C005051CB /* GameViewController.swift */,
 				1F1F22692A468C3700EA604D /* HighScoreViewController.swift */,
-				1F1F226B2A47DCC200EA604D /* OptionsViewController.swift */,
 				1F4E5CA72A450BFC0077FCFA /* TitleScreenViewController.swift */,
 				1F7DAA492A3D491C005051CB /* Main.storyboard */,
 				1F7DAA4F2A3D491D005051CB /* Assets.xcassets */,
@@ -160,7 +157,6 @@
 				1F4E5CA62A44F3050077FCFA /* Model.swift in Sources */,
 				1F7DAA482A3D491C005051CB /* GameViewController.swift in Sources */,
 				1F7DAA442A3D491C005051CB /* AppDelegate.swift in Sources */,
-				1F1F226C2A47DCC200EA604D /* OptionsViewController.swift in Sources */,
 				1F4E5CA82A450BFC0077FCFA /* TitleScreenViewController.swift in Sources */,
 				1F7DAA462A3D491C005051CB /* SceneDelegate.swift in Sources */,
 				1F1F226A2A468C3700EA604D /* HighScoreViewController.swift in Sources */,
