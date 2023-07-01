@@ -149,9 +149,11 @@ extension Game {
 
 @Model class HighScore {
     var total: Int
+    var date: Date
     
-    init(total: Int) {
+    init(total: Int, date: Date) {
         self.total = total
+        self.date = date
     }
 }
 

@@ -97,8 +97,8 @@ class GameViewController: UIViewController {
     func roundDidEnd() {
         render()
         
-        if game.isGameComplete() {
-            let highScore = HighScore(total: game.total!)
+        if game.isGameComplete(), let total = game.total {
+            let highScore = HighScore(total: total, date: Date())
             let context = game.context!
             context.insert(object: highScore)
             context.delete(object: game)
@@ -132,8 +132,22 @@ class GameViewController: UIViewController {
             guard let button = button else { continue }
             guard let box = keyPath(for: button) else { continue }
             guard let game = game else { continue }
-            button.setTitle("\(game[keyPath: box] ?? game.score(box: box, dryRun: true))", for: .normal)
-            button.isEnabled = game.isRoundStarted && game[keyPath: box] == nil
+            if let existing = game[keyPath: box] {
+                button.configuration = UIButton.Configuration.plain()
+                button.setTitle("\(existing)", for: .normal)
+                button.isEnabled = true
+                button.isUserInteractionEnabled = false
+            } else {
+                button.configuration = UIButton.Configuration.filled()
+                button.setTitle("\(game.score(box: box, dryRun: true))", for: .normal)
+                if game.isRoundStarted {
+                    button.isEnabled = true
+                    button.isUserInteractionEnabled = true
+                } else {
+                    button.isEnabled = false
+                    button.isUserInteractionEnabled = false
+                }
+            }
         }
         bonusButton.isEnabled = false
         totalButton.isEnabled = false
