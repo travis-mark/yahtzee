@@ -32,20 +32,24 @@ import SwiftData
         step = 0
         lowerBonus = 0
     }
+    
+    // TODO: Try to write a Swift macro to make bookkeeping easier
+    @Transient private var _counts: [Int]?
+    private var counts: [Int] {
+        if let cached = _counts { return cached }
+        var counts = [0, 0, 0, 0, 0, 0, 0]
+        for i in 0 ..< rolls.count {
+            let value = rolls[i]
+            if value != 0 {
+                counts[value] += 1
+            }
+        }
+        _counts = counts
+        return counts
+    }
 }
 
 typealias ScoreBox = WritableKeyPath<Game, Int?>
-
-private func count(dice: [Int]) -> [Int] {
-    var counts = [0, 0, 0, 0, 0, 0, 0]
-    for i in 0 ..< dice.count {
-        let value = dice[i]
-        if value != 0 {
-            counts[value] += 1
-        }
-    }
-    return counts
-}
 
 func addUp(_ scores: Int?...) -> Int {
     return scores.reduce(0, { $0 + ($1 ?? 0)})
@@ -85,6 +89,7 @@ extension Game {
                 rolls[i] = Int.random(in: 1...6)
             }
         }
+        _counts = nil
         step = step + 1
     }
     
@@ -94,44 +99,45 @@ extension Game {
     }
     
     func score(box: ScoreBox, dryRun: Bool) -> Int {
-        let counts = count(dice: rolls)
         let isYahtzee = counts.contains(5)
         let isJoker = isYahtzee && yahtzee != nil
-        let calculate: ([Int]) -> Int = { rolls in
-            switch box {
-            case \.ones:
-                return rolls.reduce(0, { $0 + ($1 == 1 ? $1 : 0) })
-            case \.twos:
-                return rolls.reduce(0, { $0 + ($1 == 2 ? $1 : 0) })
-            case \.threes:
-                return rolls.reduce(0, { $0 + ($1 == 3 ? $1 : 0) })
-            case \.fours:
-                return rolls.reduce(0, { $0 + ($1 == 4 ? $1 : 0) })
-            case \.fives:
-                return rolls.reduce(0, { $0 + ($1 == 5 ? $1 : 0) })
-            case \.sixes:
-                return rolls.reduce(0, { $0 + ($1 == 6 ? $1 : 0) })
-            case \.threeOfAKind:
-                return isJoker || counts.max()! >= 3 ? rolls.reduce(0, +) : 0
-            case \.fourOfAKind:
-                return isJoker || counts.max()! >= 4 ? rolls.reduce(0, +) : 0
-            case \.smallStraight:
-                let mask = rolls.reduce(0, { $0 | 1 << $1 })
-                return isJoker || mask & 30 == 30 || mask & 60 == 60 || mask & 120 == 120 ? 30 : 0
-            case \.largeStraight:
-                let mask = rolls.reduce(0, { $0 | 1 << $1 })
-                return isJoker || mask & 62 == 62 || mask & 124 == 124 ? 40 : 0
-            case \.fullHouse:
-                return isJoker || counts.contains(3) && counts.contains(2) ? 25 : 0
-            case \.chance:
-                return rolls.reduce(0, +)
-            case \.yahtzee:
-                return isYahtzee ? 50 : 0
-            default:
-                return 0
-            }
+        // Swift 5.9 switch-as-expr feels out of place with the language
+        // Case blocks with multiple statements still require lambda-with-return
+        let value: Int =
+        switch box {
+        case \.ones:
+            rolls.reduce(0, { $0 + ($1 == 1 ? $1 : 0) })
+        case \.twos:
+            rolls.reduce(0, { $0 + ($1 == 2 ? $1 : 0) })
+        case \.threes:
+            rolls.reduce(0, { $0 + ($1 == 3 ? $1 : 0) })
+        case \.fours:
+            rolls.reduce(0, { $0 + ($1 == 4 ? $1 : 0) })
+        case \.fives:
+            rolls.reduce(0, { $0 + ($1 == 5 ? $1 : 0) })
+        case \.sixes:
+            rolls.reduce(0, { $0 + ($1 == 6 ? $1 : 0) })
+        case \.threeOfAKind:
+            isJoker || counts.max()! >= 3 ? rolls.reduce(0, +) : 0
+        case \.fourOfAKind:
+            isJoker || counts.max()! >= 4 ? rolls.reduce(0, +) : 0
+        case \.smallStraight: {
+            let mask = rolls.reduce(0, { $0 | 1 << $1 })
+            return isJoker || mask & 30 == 30 || mask & 60 == 60 || mask & 120 == 120 ? 30 : 0
+        }()
+        case \.largeStraight: {
+            let mask = rolls.reduce(0, { $0 | 1 << $1 })
+            return isJoker || mask & 62 == 62 || mask & 124 == 124 ? 40 : 0
+        }()
+        case \.fullHouse:
+            isJoker || counts.contains(3) && counts.contains(2) ? 25 : 0
+        case \.chance:
+            rolls.reduce(0, +)
+        case \.yahtzee:
+            isYahtzee ? 50 : 0
+        default:
+            0
         }
-        let value = calculate(rolls)
         if !dryRun {
             setValue(for: box, to: value)
             subtotal = addUp(ones, twos, threes, fours, fives, sixes)
