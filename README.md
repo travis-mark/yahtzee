@@ -8,7 +8,7 @@ Due to the game's copyrighted nature, it is not on the app store but
 you can message me for a TestFlight invite.
 
 TODO: Buttons: Display only styling
-TODO: Joker: Force Upper
 TODO: Joker: Animation
 TODO: Score: Charts
 TODO: Sheet: SwiftUI test
+TODO: TipKit App Walkthrough

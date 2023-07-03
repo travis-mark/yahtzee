@@ -56,12 +56,15 @@ func addUp(_ scores: Int?...) -> Int {
 }
 
 extension Game {
-    var isRoundStarted: Bool {
-        return step > 0
+    static let upperBoxes: [ScoreBox] = [\.ones, \.twos, \.threes, \.fours, \.fives, \.sixes]
+    static let lowerBoxes: [ScoreBox] = [\.threeOfAKind, \.fourOfAKind, \.fullHouse, \.smallStraight, \.largeStraight, \.chance, \.yahtzee]
+    
+    var isJoker: Bool {
+        return counts.contains(5) && yahtzee != nil
     }
     
     var isRollEnabled: Bool {
-        return step < 3 && !isGameComplete()
+        return step < 3 && !isGameComplete() && !(isJoker && step > 0)
     }
     
     func isGameComplete() -> Bool {
@@ -98,9 +101,26 @@ extension Game {
         holds[index] = !holds[index]
     }
     
+    func canScore(box: ScoreBox) -> Bool {
+        guard step > 0 else { return false }
+        guard self[keyPath: box] == nil else { return false }
+        guard box != \.upperBonus else { return false }
+        guard box != \.lowerBonus else { return false }
+        guard box != \.total else { return false }
+        if isJoker {
+            let upperBox: ScoreBox = Game.upperBoxes[rolls[0]-1]
+            if box != upperBox {
+                if Game.lowerBoxes.contains(box) {
+                    guard self[keyPath: upperBox] != nil else { return false }
+                } else {
+                    guard Game.lowerBoxes.allSatisfy({ self[keyPath: $0] != nil }) else { return false }
+                }
+            }
+        }
+        return true
+    }
+    
     func score(box: ScoreBox, dryRun: Bool) -> Int {
-        let isYahtzee = counts.contains(5)
-        let isJoker = isYahtzee && yahtzee != nil
         // Swift 5.9 switch-as-expr feels out of place with the language
         // Case blocks with multiple statements still require lambda-with-return
         let value: Int =
@@ -134,7 +154,7 @@ extension Game {
         case \.chance:
             rolls.reduce(0, +)
         case \.yahtzee:
-            isYahtzee ? 50 : 0
+            counts.contains(5) ? 50 : 0
         default:
             0
         }

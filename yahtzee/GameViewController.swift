@@ -87,10 +87,15 @@ class GameViewController: UIViewController {
     }
     
     @IBAction func scoreButtonDidPress(_ sender: UIButton) {
-        let box = keyPath(for: sender)
-        assert(box != nil, "Invalid button press -- no scoring rules")
-        assert(game.isRoundStarted, "Must roll at least once to score")
-        let _ = game.score(box: box!, dryRun: false)
+        guard let box = keyPath(for: sender) else {
+            assert(false, "Invalid button press -- no scoring rules")
+            return
+        }
+        guard game.canScore(box: box) else {
+            assert(false, "Must roll at least once to score")
+            return
+        }
+        let _ = game.score(box: box, dryRun: false)
         roundDidEnd()
     }
     
@@ -113,7 +118,6 @@ class GameViewController: UIViewController {
         if sender === foursButton { return \.fours }
         if sender === fivesButton { return \.fives }
         if sender === sixesButton { return \.sixes }
-//        if sender === bonus { return \.ones }
         if sender === bonusButton { return \.upperBonus }
         if sender === threeOfAKindButton { return \.threeOfAKind }
         if sender === fourOfAKindButton { return \.fourOfAKind }
@@ -139,11 +143,12 @@ class GameViewController: UIViewController {
                 button.isUserInteractionEnabled = false
             } else {
                 button.configuration = UIButton.Configuration.filled()
-                button.setTitle("\(game.score(box: box, dryRun: true))", for: .normal)
-                if game.isRoundStarted {
+                if game.canScore(box: box) {
+                    button.setTitle("\(game.score(box: box, dryRun: true))", for: .normal)
                     button.isEnabled = true
                     button.isUserInteractionEnabled = true
                 } else {
+                    button.setTitle("--", for: .normal)
                     button.isEnabled = false
                     button.isUserInteractionEnabled = false
                 }
