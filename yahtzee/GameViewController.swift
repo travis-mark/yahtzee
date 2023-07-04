@@ -23,6 +23,7 @@ class GameViewController: UIViewController {
     @IBOutlet weak var foursButton: UIButton!
     @IBOutlet weak var fivesButton: UIButton!
     @IBOutlet weak var sixesButton: UIButton!
+    @IBOutlet weak var subtotalButton: UIButton!
     @IBOutlet weak var bonusButton: UIButton!
     @IBOutlet weak var threeOfAKindButton: UIButton!
     @IBOutlet weak var fourOfAKindButton: UIButton!
@@ -118,6 +119,7 @@ class GameViewController: UIViewController {
         if sender === foursButton { return \.fours }
         if sender === fivesButton { return \.fives }
         if sender === sixesButton { return \.sixes }
+        if sender === subtotalButton { return \.subtotal }
         if sender === bonusButton { return \.upperBonus }
         if sender === threeOfAKindButton { return \.threeOfAKind }
         if sender === fourOfAKindButton { return \.fourOfAKind }
@@ -131,8 +133,7 @@ class GameViewController: UIViewController {
     }
     
     func render(_ view: UIView? = nil) {
-        for button in [onesButton, twosButton, threesButton, foursButton, fivesButton, sixesButton, bonusButton,
-                    threeOfAKindButton, fourOfAKindButton, fullHouseButton, smallStraightButton, largeStraightButton, chanceButton, yahtzeeButton, totalButton] {
+        for button in [onesButton, twosButton, threesButton, foursButton, fivesButton, sixesButton, subtotalButton, bonusButton, threeOfAKindButton, fourOfAKindButton, fullHouseButton, smallStraightButton, largeStraightButton, chanceButton, yahtzeeButton, totalButton] {
             guard let button = button else { continue }
             guard let box = keyPath(for: button) else { continue }
             guard let game = game else { continue }
